@@ -21,7 +21,16 @@ const app = express();
 const PORT = Number(process.env.PORT || 3000);
 const rootDir = path.resolve(__dirname, "..");
 
-app.use(cors());
+app.use(cors({
+    origin: function(origin, callback){
+        if(!origin || isAllowedOrigin(origin)){
+            callback(null, true);
+            return;
+        }
+        callback(new Error("Origen no permitido por CORS."));
+    },
+    credentials: true
+}));
 app.use(express.json({ limit: "25mb" }));
 app.use(express.static(rootDir));
 
@@ -295,4 +304,20 @@ function normalizeMoney(value){
 function sendError(res, error){
     console.error(error);
     res.status(500).json({ message: error.message || "Error interno" });
+}
+
+function isAllowedOrigin(origin){
+    try{
+        const url = new URL(origin);
+        if(["localhost", "127.0.0.1"].includes(url.hostname)){
+            return true;
+        }
+        const extraOrigins = String(process.env.ALLOWED_ORIGINS || "")
+            .split(",")
+            .map(function(item){ return item.trim(); })
+            .filter(Boolean);
+        return extraOrigins.includes(origin);
+    }catch(error){
+        return false;
+    }
 }

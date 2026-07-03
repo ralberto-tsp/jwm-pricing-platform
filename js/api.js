@@ -1,4 +1,12 @@
-const JWM_API_BASE = localStorage.getItem("jwm_api_base") || "/api";
+const JWM_API_BASE = localStorage.getItem("jwm_api_base") || obtenerApiBase();
+
+function obtenerApiBase(){
+    const hostLocal = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+    if(hostLocal && window.location.port && window.location.port !== "3000"){
+        return "http://localhost:3000/api";
+    }
+    return "/api";
+}
 
 async function apiRequest(path, options = {}){
     const config = Object.assign({
