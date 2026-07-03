@@ -1,0 +1,296 @@
+.resultado-hero{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+    margin-bottom:20px;
+}
+
+.tarifas-apoyo-resultado{
+    display:block;
+    padding:18px;
+    border:1px solid rgba(22,45,81,.12);
+    border-radius:8px;
+    background:#ffffff;
+    box-shadow:0 10px 20px rgba(20,36,74,.07);
+    margin-bottom:18px;
+}
+
+.tarifas-apoyo-resultado:empty{
+    display:none;
+}
+
+.tarifas-detalle-heading{
+    margin-bottom:12px;
+}
+
+.tarifas-detalle-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:14px;
+}
+
+.tarifa-apoyo-card{
+    padding:14px 16px;
+    border:1px solid rgba(22,45,81,.12);
+    border-left:4px solid var(--naranja-jwm);
+    border-radius:8px;
+    background:#f8fafc;
+}
+
+.tarifa-apoyo-card.pendiente-driver{
+    border-left-color:#eab308;
+    background:#fffdf4;
+}
+
+.tarifa-apoyo-head{
+    display:grid;
+    gap:6px;
+}
+
+.tarifa-apoyo-card span{
+    display:block;
+    color:var(--texto-suave);
+    font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
+}
+
+.tarifa-apoyo-card strong{
+    display:block;
+    color:var(--azul-noche);
+    font-size:23px;
+}
+
+.tarifa-apoyo-card small{
+    color:var(--texto-suave);
+}
+
+.tarifa-barra{
+    height:8px;
+    margin:10px 0 7px;
+    overflow:hidden;
+    border-radius:999px;
+    background:#e2e8f0;
+}
+
+.tarifa-barra i{
+    display:block;
+    height:100%;
+    border-radius:999px;
+    background:linear-gradient(90deg,var(--azul-jwm),var(--naranja-jwm));
+}
+
+.resultado-hero .kpi-card{
+    position:relative;
+    overflow:hidden;
+}
+
+.resultado-hero .kpi-card:after{
+    content:"";
+    position:absolute;
+    right:-28px;
+    top:-28px;
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:rgba(242,140,27,.16);
+}
+
+.kpi-primary{
+    border-top-color:var(--naranja-jwm);
+}
+
+.resultado-validacion{
+    border-left:4px solid var(--naranja-jwm);
+}
+
+.resultado-actions-bottom{
+    margin-top:4px;
+    margin-bottom:18px;
+}
+
+.resultado-actions-bottom button:first-child{
+    background:linear-gradient(90deg,var(--azul-jwm),var(--cyan-jwm));
+    color:#ffffff;
+}
+
+.resultado-actions-bottom button:last-child{
+    background:linear-gradient(90deg,var(--naranja-jwm),var(--dorado-jwm));
+    color:#10233f;
+}
+
+.section-heading-row{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:16px;
+}
+
+.section-heading-row h2{
+    margin-bottom:0;
+}
+
+.tabla-resultado-wrap{
+    overflow:auto;
+    border:1px solid var(--linea);
+    border-radius:8px;
+}
+
+.tabla-resultado{
+    min-width:980px;
+}
+
+.tabla-resultado th:nth-child(5),
+.tabla-resultado td:nth-child(5){
+    width:90px;
+    text-align:center;
+}
+
+.fila-concepto td{
+    vertical-align:middle;
+    font-weight:600;
+}
+
+.btn-detalle{
+    min-height:auto;
+    padding:7px 11px;
+    border-radius:8px;
+    font-size:13px;
+}
+
+.col-excluir input,
+.lista-subconceptos input{
+    width:auto;
+    min-height:auto;
+}
+
+.fila-subconceptos td{
+    background:#f8fbff;
+    padding:0;
+}
+
+.lista-subconceptos{
+    list-style:none;
+    margin:0;
+    padding:12px 18px 12px 28px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.lista-subconceptos li{
+    display:grid;
+    grid-template-columns:minmax(260px,1fr) 140px 80px 60px;
+    align-items:center;
+    gap:14px;
+    color:var(--texto);
+    font-size:13px;
+}
+
+.lista-subconceptos span:nth-child(2),
+.lista-subconceptos span:nth-child(3){
+    text-align:right;
+    color:var(--texto-suave);
+    font-weight:700;
+}
+
+.resultado-complementarios{
+    border-left:4px solid #153154;
+}
+
+.tabla-complementarios{
+    min-width:720px;
+}
+
+.tabla-complementarios th:nth-child(4),
+.tabla-complementarios td:nth-child(4){
+    text-align:right;
+    font-weight:700;
+}
+
+.grupos-costos{
+    display:grid;
+    gap:18px;
+}
+
+.grupo-costo{
+    border:1px solid rgba(22,45,81,.16);
+    border-radius:8px;
+    overflow:hidden;
+    background:#ffffff;
+}
+
+.grupo-costo-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:10px 14px;
+    background:#f28c1b;
+    color:#ffffff;
+}
+
+.grupo-costo-header h3{
+    margin:0;
+    font-size:15px;
+    color:#ffffff;
+}
+
+.grupo-costo-header div{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-weight:800;
+}
+
+.grupo-costo-header span{
+    min-width:72px;
+    text-align:right;
+}
+
+.tabla-grupo-costo{
+    min-width:760px;
+}
+
+.tabla-grupo-costo th{
+    background:#fff4e6;
+    color:#153154;
+    border-bottom:1px solid rgba(22,45,81,.16);
+}
+
+.tabla-grupo-costo td:nth-child(2),
+.tabla-grupo-costo td:nth-child(3),
+.tabla-grupo-costo th:nth-child(2),
+.tabla-grupo-costo th:nth-child(3){
+    text-align:right;
+    width:130px;
+}
+
+.tabla-grupo-costo td:nth-child(4),
+.tabla-grupo-costo th:nth-child(4),
+.tabla-grupo-costo td:nth-child(5),
+.tabla-grupo-costo th:nth-child(5){
+    text-align:center;
+    width:90px;
+}
+
+.grupo-costo .fila-concepto td{
+    font-weight:700;
+    background:#ffffff;
+}
+
+.grupo-costo .fila-subconceptos td{
+    background:#f8fafc;
+}
+
+@media (max-width: 760px){
+    .grupo-costo-header{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .grupo-costo-header div{
+        width:100%;
+        justify-content:space-between;
+    }
+}

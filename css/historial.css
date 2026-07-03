@@ -1,0 +1,46 @@
+﻿.historial-filtros{
+    align-items: end;
+}
+
+.historial-card{
+    overflow: hidden;
+}
+
+.tabla-historial-wrap{
+    width: 100%;
+    overflow: auto;
+    border: 1px solid rgba(22, 45, 81, 0.10);
+    border-radius: 8px;
+}
+
+.tabla-historial{
+    min-width: 1120px;
+}
+
+.tabla-historial th,
+.tabla-historial td{
+    white-space: nowrap;
+}
+
+.historial-actions{
+    display: flex;
+    gap: 6px;
+}
+
+.historial-actions button{
+    background: #ffffff;
+    color: #153154;
+    border: 1px solid rgba(22, 45, 81, 0.18);
+}
+
+.historial-actions button:first-child{
+    background: #f59e0b;
+    color: #111827;
+    border-color: #f59e0b;
+}
+
+.historial-vacio{
+    text-align: center;
+    color: #64748b;
+    padding: 22px;
+}

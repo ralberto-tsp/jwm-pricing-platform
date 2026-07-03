@@ -1,0 +1,64 @@
+﻿<div id="pantalla-resultado" style="display:none;">
+    <section class="resultado-hero">
+        <div class="kpi-card kpi-primary">
+            <span class="kpi-label">Costo Integral</span>
+            <strong id="resCosto">S/ 0.00</strong>
+            <small>Total del servicio</small>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">Costo por Km</span>
+            <strong id="resCostoKm">S/ 0.00</strong>
+            <small>Referencia operativa</small>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">Tarifa Objetivo</span>
+            <strong id="resTarifa">S/ 0.00</strong>
+            <small>Con margen aplicado</small>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">Utilidad</span>
+            <strong id="resUtilidad">S/ 0.00</strong>
+            <small id="resRentabilidad">0 %</small>
+        </div>
+    </section>
+
+    <section id="tarifasApoyoResultado" class="tarifas-apoyo-resultado"></section>
+
+    <section class="card resultado-validacion">
+        <h2>Validacion Comercial</h2>
+        <div class="grid">
+            <div>
+                <label>Tarifa Objetivo</label>
+                <input type="number" id="tarifaObjetivoResultado" value="0">
+            </div>
+            <div>
+                <label>Tarifa Cliente</label>
+                <input type="number" id="tarifaClienteResultado" value="0" oninput="validarTarifa()">
+            </div>
+            <div>
+                <label>Diferencia</label>
+                <input type="text" id="diferenciaTarifa" readonly>
+            </div>
+            <div>
+                <label>Rentabilidad</label>
+                <input type="text" id="rentabilidadCalculada" readonly>
+            </div>
+        </div>
+        <div id="alertaComercial" class="alerta-neutra">Sin evaluar</div>
+    </section>
+
+    <section class="card">
+        <div class="section-heading-row">
+            <div>
+                <span class="section-label">Costeo detallado</span>
+                <h2>Desglose de Costos</h2>
+            </div>
+        </div>
+        <div id="gruposCostos" class="grupos-costos"></div>
+    </section>
+
+    <section class="actions resultado-actions resultado-actions-bottom">
+        <button onclick="recalcularResultado()">Recalcular</button>
+        <button onclick="guardarCotizacionResultado()">Guardar Cotizacion</button>
+    </section>
+</div>

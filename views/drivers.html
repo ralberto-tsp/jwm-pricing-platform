@@ -1,0 +1,70 @@
+﻿<div id="pantalla-drivers" style="display:none;">
+    <div class="drivers-container">
+        <aside class="drivers-menu">
+            <h2>Drivers</h2>
+            <ul>
+                <li onclick="cargarDriver('flota')">Tractos y Camiones</li>
+                <li onclick="cargarDriver('acoples')">Acoples</li>
+                <li onclick="cargarDriver('unidadesApoyo')">Camionetas y Apoyos</li>
+                <li onclick="cargarDriver('flotaProrrateo')">Flota Prorrateo</li>
+                <li onclick="cargarDriver('ubigeos')">Ubigeos y Destinos</li>
+                <li onclick="cargarDriver('combustible')">Combustible</li>
+                <li onclick="cargarDriver('rendimiento')">Rendimiento</li>
+                <li onclick="cargarDriver('tipoServicio')">Tipo de Servicio</li>
+                <li onclick="cargarDriver('conductores')">Conductores</li>
+                <li onclick="cargarDriver('personal')">Personal</li>
+                <li onclick="cargarDriver('peajes')">Peajes</li>
+                <li onclick="cargarDriver('mantenimiento')">Mantenimiento</li>
+                <li onclick="cargarDriver('neumaticos')">Neumaticos</li>
+                <li onclick="cargarDriver('seguros')">Seguros</li>
+                <li onclick="cargarDriver('operativos')">Costos Operativos</li>
+                <li onclick="cargarDriver('viaje')">Costos por Viaje</li>
+                <li onclick="cargarDriver('administrativos')">Gastos Administrativos</li>
+                <li onclick="cargarDriver('financieros')">Gastos Financieros</li>
+                <li onclick="cargarDriver('permisos')">Costos de Permisos</li>
+                <li onclick="cargarDriver('margenes')">Margenes</li>
+            </ul>
+        </aside>
+        <section class="drivers-panel">
+            <div class="drivers-panel-header">
+                <div>
+                    <span class="section-label">Administrador de drivers</span>
+                    <h2 id="tituloDriver">Seleccione un Driver</h2>
+                </div>
+            </div>
+            <div class="toolbar-driver">
+                <div class="toolbar-left">
+                    <button onclick="nuevoRegistro()">Nuevo</button>
+                    <button onclick="buscarRegistro()">Buscar</button>
+                </div>
+                <div class="toolbar-right">
+                    <button onclick="importarExcel()">Importar Excel</button>
+                    <button onclick="exportarExcel()">Exportar Excel</button>
+                    <button onclick="guardarDriver()">Guardar</button>
+                </div>
+            </div>
+            <div class="tabla-driver">
+                <table class="tabla-drivers">
+                    <thead id="cabeceraDriver"><tr><th>Seleccione un Driver</th></tr></thead>
+                    <tbody id="tablaDriver"><tr><td style="text-align:center;">Seleccione un Driver</td></tr></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+    <div id="modalDriver" class="modal-driver" style="display:none;">
+        <div class="modal-driver-card">
+            <div class="modal-driver-header">
+                <div>
+                    <span class="section-label">Registro</span>
+                    <h2 id="modalDriverTitulo">Nuevo registro</h2>
+                </div>
+                <button type="button" class="btn-modal-close" onclick="cerrarModalDriver()">Cerrar</button>
+            </div>
+            <div id="modalDriverCampos" class="modal-driver-grid"></div>
+            <div class="modal-driver-actions">
+                <button type="button" onclick="guardarRegistroModal()">Guardar Registro</button>
+            </div>
+        </div>
+    </div>
+</div>
+

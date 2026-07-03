@@ -1,0 +1,50 @@
+﻿<div id="pantalla-historial" style="display:none;">
+    <section class="card">
+        <h2>Historial de Cotizaciones</h2>
+        <div class="grid historial-filtros">
+            <div>
+                <label>Nro Cotizacion</label>
+                <input type="text" id="buscarCotizacion" placeholder="COT-0001" oninput="cargarHistorial()">
+            </div>
+            <div>
+                <label>Cliente</label>
+                <input type="text" id="buscarCliente" placeholder="Cliente" oninput="cargarHistorial()">
+            </div>
+            <div>
+                <label>Fecha</label>
+                <input type="date" id="buscarFecha" onchange="cargarHistorial()">
+            </div>
+        </div>
+        <div class="actions">
+            <button onclick="cargarHistorial()">Buscar</button>
+        </div>
+    </section>
+
+    <section class="card historial-card">
+        <div class="section-heading-row">
+            <div>
+                <span class="section-label">Registro comercial</span>
+                <h2>Resultados</h2>
+            </div>
+        </div>
+        <div class="tabla-historial-wrap">
+            <table class="tabla-drivers tabla-historial">
+                <thead>
+                    <tr>
+                        <th>Cotizacion</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Tipo de Servicio</th>
+                        <th>Configuracion</th>
+                        <th>Tarifa</th>
+                        <th>Ver</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaHistorial"></tbody>
+            </table>
+        </div>
+    </section>
+</div>
+

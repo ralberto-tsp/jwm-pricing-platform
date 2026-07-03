@@ -1,0 +1,259 @@
+﻿<div id="pantalla-cotizacion">
+    <header class="header">
+        <h1>Plataforma Integral de Costos, Tarifas y Rentabilidad</h1>
+    </header>
+
+    <section class="card">
+        <h2>Informacion General</h2>
+        <div class="grid">
+            <div>
+                <label>Nro Cotizacion</label>
+                <input type="text" id="numeroCotizacion" readonly placeholder="Crear cotizacion">
+            </div>
+            <div>
+                <label>Fecha Cotizacion</label>
+                <input type="date" id="fechaCotizacion">
+            </div>
+            <div>
+                <label>Cliente</label>
+                <input type="text" id="cliente">
+            </div>
+            <div>
+                <label>Comercial Responsable</label>
+                <input type="text" id="comercial" placeholder="Nombre del ejecutivo">
+            </div>
+            <div>
+                <label>Tipo de Servicio</label>
+                <select id="tipoServicio"></select>
+            </div>
+            <div class="form-action-cell action-start-cell">
+                <label>&nbsp;</label>
+                <button type="button" onclick="crearCotizacion()">Crear Cotizacion</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Ubicacion</h2>
+        <div class="grid grid-two-columns">
+            <div>
+                <h3>Origen</h3>
+                <label>Distrito Origen</label>
+                <input type="text" id="origen" list="listaUbigeos" autocomplete="off">
+
+                <label>Provincia Origen</label>
+                <input type="text" id="provinciaOrigen" readonly>
+
+                <label>Departamento Origen</label>
+                <input type="text" id="departamentoOrigen" readonly>
+            </div>
+            <div>
+                <h3>Destino</h3>
+                <label>Distrito Destino</label>
+                <input type="text" id="destino" list="listaUbigeos" autocomplete="off">
+
+                <label>Provincia Destino</label>
+                <input type="text" id="provinciaDestino" readonly>
+
+                <label>Departamento Destino</label>
+                <input type="text" id="departamentoDestino" readonly>
+            </div>
+        </div>
+        <datalist id="listaUbigeos"></datalist>
+    </section>
+
+    <section class="card">
+        <h2>Datos de la Carga</h2>
+        <div class="grid">
+            <div>
+                <label>Descripcion de la Carga</label>
+                <input type="text" id="descripcionCarga" placeholder="Ej. Excavadora CAT 336">
+            </div>
+            <div>
+                <label>Cantidad</label>
+                <input type="number" id="cantidadCarga" value="1" min="0" step="1">
+            </div>
+            <div>
+                <label>Peso Unitario (TN)</label>
+                <input type="number" id="pesoUnitario" min="0" step="0.01">
+            </div>
+            <div>
+                <label>Peso Total (TN)</label>
+                <input type="number" id="pesoTotal" readonly>
+            </div>
+            <div>
+                <label>Largo (m)</label>
+                <input type="number" id="largoCarga" min="0" step="0.01">
+            </div>
+            <div>
+                <label>Ancho (m)</label>
+                <input type="number" id="anchoCarga" min="0" step="0.01">
+            </div>
+            <div>
+                <label>Alto (m)</label>
+                <input type="number" id="altoCarga" min="0" step="0.01">
+            </div>
+            <div class="form-action-cell">
+                <label>&nbsp;</label>
+                <button type="button" onclick="agregarCargaCotizacion()">Agregar carga</button>
+            </div>
+            <div>
+                <label>Clasificacion por Peso</label>
+                <input type="text" id="clasificacionPeso" readonly>
+            </div>
+            <div>
+                <label>Clasificacion por Medidas</label>
+                <input type="text" id="clasificacionMedidas" readonly>
+            </div>
+            <div class="grid-full">
+                <div id="listaCargasCotizacion" class="lista-cargas-cotizacion"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Configuracion Operativa</h2>
+        <div class="grid">
+            <div>
+                <label>Tipo Vehiculo</label>
+                <select id="tipoVehiculo"></select>
+            </div>
+            <div>
+                <label>Configuracion Principal</label>
+                <select id="configuracionPrincipal"></select>
+            </div>
+            <div>
+                <label>Tracto de Apoyo</label>
+                <select id="tractoApoyo">
+                    <option>No</option>
+                    <option>Si</option>
+                </select>
+            </div>
+            <div>
+                <label>Tipo de Acople</label>
+                <select id="tipoAcople"></select>
+            </div>
+            <div>
+                <label>Configuracion Acople</label>
+                <select id="configuracionAcople"></select>
+            </div>
+            <div>
+                <label>Configuracion Vehicular</label>
+                <input type="text" id="configuracionFinal" readonly>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Recursos Operativos</h2>
+        <div class="grid">
+            <div>
+                <label>Categoria Conductor</label>
+                <select id="categoriaConductor"></select>
+            </div>
+            <div>
+                <label>Cantidad Conductores</label>
+                <input type="number" id="cantidadConductores" value="1" min="0">
+            </div>
+            <div>
+                <label>Personal Operativo</label>
+                <select id="tipoPersonalOperativo"></select>
+            </div>
+            <div>
+                <label>Cantidad Personal</label>
+                <input type="number" id="cantidadPersonalOperativo" value="1" min="1">
+            </div>
+            <div class="form-action-cell">
+                <label>&nbsp;</label>
+                <button type="button" onclick="agregarPersonalOperativo()">Agregar personal</button>
+            </div>
+            <div>
+                <label>Cantidad Escoltas</label>
+                <input type="number" id="cantidadEscoltas" value="0" min="0">
+            </div>
+            <div>
+                <label>Cantidad Apoyo Policial</label>
+                <input type="number" id="cantidadApoyoPolicial" value="0" min="0">
+            </div>
+            <div>
+                <label>Cantidad Topografos</label>
+                <input type="number" id="cantidadTopografos" value="0" min="0">
+            </div>
+            <div>
+                <label>Tipo de Permiso</label>
+                <input type="text" id="tipoPermiso" readonly>
+            </div>
+            <div class="grid-full">
+                <div id="listaPersonalOperativo" class="lista-personal-operativo"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Ruta y Tiempos</h2>
+        <div class="grid">
+            <div>
+                <label>Tipo de Viaje</label>
+                <select id="tipoViaje">
+                    <option value="ida">Solo Ida</option>
+                    <option value="ida-vuelta">Ida y Vuelta</option>
+                </select>
+            </div>
+            <div>
+                <label>Km Totales</label>
+                <input type="number" id="kmTotales" readonly>
+            </div>
+            <div>
+                <label>Dias Transito</label>
+                <input type="number" id="diasTransito" readonly>
+            </div>
+            <div>
+                <label>Dias Adicionales</label>
+                <input type="number" id="diasAdicionales" value="0" min="0">
+            </div>
+            <div>
+                <label>Dias Totales</label>
+                <input type="number" id="diasTotales" readonly>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Condiciones Comerciales</h2>
+        <div class="grid">
+            <div>
+                <label>Forma de Pago</label>
+                <select id="formaPago">
+                    <option>Contado</option>
+                    <option>Credito</option>
+                    <option>Credito + Factoring</option>
+                </select>
+            </div>
+            <div>
+                <label>Dias de Pago</label>
+                <input type="number" id="diasPago" value="0" min="0">
+            </div>
+            <div>
+                <label>% Factoring</label>
+                <input type="number" id="porcentajeFactoring" step="0.01" value="0" min="0">
+            </div>
+            <div>
+                <label>Tipo de Cambio</label>
+                <input type="number" id="tipoCambio" step="0.001" readonly>
+            </div>
+            <div>
+                <label>Margen Objetivo (%)</label>
+                <input type="number" id="margenObjetivo" step="0.01" min="0">
+            </div>
+            <div>
+                <label>Tarifa Ofrecida Cliente (S/)</label>
+                <input type="number" id="tarifaCliente" min="0" step="0.01">
+            </div>
+        </div>
+    </section>
+
+    <section class="actions">
+        <button onclick="generarResumen()">Calcular Tarifa</button>
+    </section>
+</div>
+

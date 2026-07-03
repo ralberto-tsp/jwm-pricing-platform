@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.local
+.DS_Store
+Thumbs.db
+desktop.ini
+npm-debug.log*
+pnpm-debug.log*
+tmp/

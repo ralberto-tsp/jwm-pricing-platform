@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: jwm-pricing-platform
+    env: node
+    plan: free
+    buildCommand: pnpm install --frozen-lockfile
+    startCommand: pnpm start
+    envVars:
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_SSL
+        value: "true"
+      - key: DB_SSL_REJECT_UNAUTHORIZED
+        value: "true"

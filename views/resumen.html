@@ -1,0 +1,120 @@
+﻿<div id="pantalla-resumen" style="display:none;">
+    <section class="resumen-hero">
+        <div class="resumen-brand">
+            <img src="assets/logo-jwm.jpg" alt="JWM">
+            <div>
+                <span class="section-label">Resumen Ejecutivo</span>
+                <h1 id="resumenTitulo">Cotizacion de transporte</h1>
+                <p id="resumenSubtitulo">Servicio pendiente de calcular.</p>
+            </div>
+        </div>
+        <div class="resumen-meta">
+            <span id="resumenNumero">COT-0001</span>
+            <small id="resumenFecha">-</small>
+        </div>
+    </section>
+
+    <section class="resumen-dashboard">
+        <article class="resumen-metric primary">
+            <span>Costo Integral</span>
+            <strong id="resumenCosto">S/ 0.00</strong>
+            <small id="resumenCostoKm">S/ 0.00 por km</small>
+        </article>
+        <article class="resumen-metric">
+            <span>Tarifa Objetivo</span>
+            <strong id="resumenTarifa">S/ 0.00</strong>
+            <small id="resumenMargen">Margen objetivo 0%</small>
+        </article>
+        <article class="resumen-metric">
+            <span>Utilidad</span>
+            <strong id="resumenUtilidad">S/ 0.00</strong>
+            <small id="resumenRentabilidad">0% rentabilidad</small>
+        </article>
+        <article class="resumen-metric accent">
+            <span>Distancia</span>
+            <strong id="resumenKm">0 km</strong>
+            <small id="resumenDias">0 dias de servicio</small>
+        </article>
+    </section>
+
+    <section class="card resumen-panel resumen-tarifas-panel">
+        <div class="section-heading-row">
+            <div>
+                <span class="section-label">Tarifas por componente</span>
+                <h2>Desglose Comercial</h2>
+            </div>
+        </div>
+        <div id="resumenDesgloseTarifas" class="tarifas-detalle-grid"></div>
+    </section>
+
+    <section class="resumen-grid">
+        <article class="card resumen-panel">
+            <div class="section-heading-row">
+                <div>
+                    <span class="section-label">Servicio</span>
+                    <h2>Datos Operativos</h2>
+                </div>
+            </div>
+            <dl class="resumen-lista">
+                <div><dt>Cliente</dt><dd id="resumenCliente">-</dd></div>
+                <div><dt>Comercial</dt><dd id="resumenComercial">-</dd></div>
+                <div><dt>Origen</dt><dd id="resumenOrigen">-</dd></div>
+                <div><dt>Destino</dt><dd id="resumenDestino">-</dd></div>
+                <div><dt>Tipo de Servicio</dt><dd id="resumenTipoServicio">-</dd></div>
+                <div><dt>Carga</dt><dd id="resumenCarga">-</dd></div>
+                <div><dt>Peso Total</dt><dd id="resumenPeso">-</dd></div>
+                <div><dt>Configuracion</dt><dd id="resumenConfig">-</dd></div>
+                <div><dt>Permiso</dt><dd id="resumenPermiso">-</dd></div>
+            </dl>
+        </article>
+
+        <article class="card resumen-panel">
+            <div class="section-heading-row">
+                <div>
+                    <span class="section-label">Composicion</span>
+                    <h2>Dashboard de Costos</h2>
+                </div>
+            </div>
+            <div class="barras-costos" id="resumenBarrasCostos"></div>
+        </article>
+    </section>
+
+    <section class="resumen-grid resumen-grid-bottom">
+        <article class="card resumen-panel">
+            <div class="section-heading-row">
+                <div>
+                    <span class="section-label">Recursos</span>
+                    <h2>Operativo Sugerido</h2>
+                </div>
+            </div>
+            <div class="recursos-resumen">
+                <div><strong id="resumenConductores">0</strong><span>Conductores</span></div>
+                <div><strong id="resumenEscoltas">0</strong><span>Escoltas</span></div>
+                <div><strong id="resumenPolicial">0</strong><span>Apoyo policial</span></div>
+                <div><strong id="resumenTopografos">0</strong><span>Topografos</span></div>
+                <div><strong id="resumenPersonal">0</strong><span>Personal operativo</span></div>
+            </div>
+        </article>
+
+        <article class="card resumen-panel">
+            <div class="section-heading-row">
+                <div>
+                    <span class="section-label">Condiciones</span>
+                    <h2>Comercial</h2>
+                </div>
+            </div>
+            <dl class="resumen-lista compacta">
+                <div><dt>Forma de Pago</dt><dd id="resumenFormaPago">-</dd></div>
+                <div><dt>Dias de Pago</dt><dd id="resumenDiasPago">-</dd></div>
+                <div><dt>Tipo de Cambio</dt><dd id="resumenTipoCambio">-</dd></div>
+                <div><dt>Tarifa Cliente</dt><dd id="resumenTarifaCliente">-</dd></div>
+            </dl>
+        </article>
+    </section>
+
+    <section class="actions">
+        <button onclick="generarPDF()">Generar PDF</button>
+        <button onclick="cerrarResumenCotizacion()">Cerrar y Nueva Cotizacion</button>
+    </section>
+</div>
+
