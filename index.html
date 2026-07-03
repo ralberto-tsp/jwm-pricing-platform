@@ -10,23 +10,46 @@
 <link rel="stylesheet" href="css/resultado.css">
 <link rel="stylesheet" href="css/historial.css">
 <link rel="stylesheet" href="css/resumen.css">
+<link rel="stylesheet" href="css/usuarios.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+<section id="loginPanel" class="login-panel">
+    <div class="login-card">
+        <img src="assets/logo-jwm.jpg" alt="JWM">
+        <span class="section-label">Acceso seguro</span>
+        <h1>JWM Pricing Platform</h1>
+        <form id="formLogin" onsubmit="iniciarSesionDesdeFormulario(event)">
+            <label for="loginEmail">Correo</label>
+            <input type="email" id="loginEmail" autocomplete="username" required>
+            <label for="loginPassword">Contrasena</label>
+            <input type="password" id="loginPassword" autocomplete="current-password" required>
+            <button type="submit">Ingresar</button>
+            <p id="loginMensaje" class="login-message"></p>
+        </form>
+    </div>
+</section>
+
 <div class="container">
     <aside class="sidebar">
         <div class="logo">
             <img src="assets/logo-jwm.jpg" alt="JWM">
             <span>Pricing Platform</span>
         </div>
+        <div class="user-box">
+            <strong id="usuarioNombre">-</strong>
+            <span id="usuarioRol">-</span>
+            <button type="button" onclick="cerrarSesion()">Cerrar sesion</button>
+        </div>
         <nav>
             <ul>
-                <li class="menu-item active" onclick="mostrarPantalla('cotizacion')">Nueva Cotizacion</li>
-                <li class="menu-item" onclick="mostrarPantalla('resultado')">Resultado</li>
-                <li class="menu-item" onclick="mostrarPantalla('resumen')">Resumen Ejecutivo</li>
-                <li class="menu-item" onclick="mostrarPantalla('historial')">Historial</li>
-                <li class="menu-item" onclick="mostrarPantalla('drivers')">Drivers</li>
+                <li class="menu-item active" data-screen="cotizacion" data-roles="admin,comercial" onclick="mostrarPantalla('cotizacion')">Nueva Cotizacion</li>
+                <li class="menu-item" data-screen="resultado" data-roles="admin,comercial" onclick="mostrarPantalla('resultado')">Resultado</li>
+                <li class="menu-item" data-screen="resumen" data-roles="admin,comercial,consulta" onclick="mostrarPantalla('resumen')">Resumen Ejecutivo</li>
+                <li class="menu-item" data-screen="historial" data-roles="admin,comercial,consulta" onclick="mostrarPantalla('historial')">Historial</li>
+                <li class="menu-item" data-screen="drivers" data-roles="admin" onclick="mostrarPantalla('drivers')">Drivers</li>
+                <li class="menu-item" data-screen="usuarios" data-roles="admin" onclick="mostrarPantalla('usuarios')">Usuarios</li>
             </ul>
         </nav>
     </aside>
@@ -37,6 +60,7 @@
         <div id="pantalla-historial" data-view="views/historial.html" style="display:none;"></div>
         <div id="pantalla-resumen" data-view="views/resumen.html" style="display:none;"></div>
         <div id="pantalla-drivers" data-view="views/drivers.html" style="display:none;"></div>
+        <div id="pantalla-usuarios" data-view="views/usuarios.html" style="display:none;"></div>
     </main>
 </div>
 
@@ -50,6 +74,8 @@
 <script src="js/resumen.js"></script>
 <script src="js/excel.js"></script>
 <script src="js/pdf.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/usuarios.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

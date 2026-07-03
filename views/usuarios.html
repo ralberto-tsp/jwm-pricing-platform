@@ -1,0 +1,74 @@
+<div id="pantalla-usuarios" style="display:none;">
+    <div class="header">
+        <h1>Usuarios y Accesos</h1>
+    </div>
+
+    <section class="usuarios-layout">
+        <article class="card usuario-form-card">
+            <h2 id="usuarioFormTitulo">Nuevo usuario</h2>
+            <form id="formUsuario" onsubmit="guardarUsuarioDesdeFormulario(event)">
+                <input type="hidden" id="usuarioId">
+                <div class="grid">
+                    <div>
+                        <label for="usuarioNombreInput">Nombre</label>
+                        <input type="text" id="usuarioNombreInput" required>
+                    </div>
+                    <div>
+                        <label for="usuarioEmailInput">Correo</label>
+                        <input type="email" id="usuarioEmailInput" required>
+                    </div>
+                    <div>
+                        <label for="usuarioRolInput">Rol</label>
+                        <select id="usuarioRolInput">
+                            <option value="comercial">Comercial</option>
+                            <option value="consulta">Consulta</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="usuarioPasswordInput">Contrasena</label>
+                        <input type="password" id="usuarioPasswordInput" autocomplete="new-password" placeholder="Minimo 8 caracteres">
+                    </div>
+                    <div class="usuario-activo-field">
+                        <label for="usuarioActivoInput">Estado</label>
+                        <select id="usuarioActivoInput">
+                            <option value="1">Activo</option>
+                            <option value="0">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <p id="usuarioFormMensaje" class="usuario-message"></p>
+                <div class="actions">
+                    <button type="submit">Guardar usuario</button>
+                    <button type="button" onclick="limpiarFormularioUsuario()">Nuevo</button>
+                </div>
+            </form>
+        </article>
+
+        <article class="card usuarios-list-card">
+            <div class="section-heading-row">
+                <div>
+                    <span class="section-label">Control de acceso</span>
+                    <h2>Usuarios registrados</h2>
+                </div>
+            </div>
+            <div class="tabla-usuarios-wrap">
+                <table class="tabla-drivers tabla-usuarios">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Ultimo acceso</th>
+                            <th>Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaUsuarios">
+                        <tr><td colspan="6">Cargando usuarios...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </section>
+</div>

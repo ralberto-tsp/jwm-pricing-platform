@@ -67,8 +67,34 @@ CREATE TABLE IF NOT EXISTS usuarios (
     nombre VARCHAR(120) NOT NULL,
     email VARCHAR(180) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
-    rol VARCHAR(40) NOT NULL DEFAULT 'usuario',
+    rol VARCHAR(40) NOT NULL DEFAULT 'consulta',
     activo TINYINT(1) NOT NULL DEFAULT 1,
+    ultimo_acceso TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS user_sessions (
+    token VARCHAR(128) PRIMARY KEY,
+    user_id BIGINT UNSIGNED NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_user_sessions_user
+        FOREIGN KEY (user_id)
+        REFERENCES usuarios(id)
+        ON DELETE CASCADE,
+    INDEX idx_user_sessions_user (user_id),
+    INDEX idx_user_sessions_expires (expires_at)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS audit_logs (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT UNSIGNED NULL,
+    accion VARCHAR(120) NOT NULL,
+    entidad VARCHAR(120) NULL,
+    entidad_id VARCHAR(120) NULL,
+    data JSON NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_audit_user (user_id),
+    INDEX idx_audit_entidad (entidad, entidad_id)
 ) ENGINE=InnoDB;

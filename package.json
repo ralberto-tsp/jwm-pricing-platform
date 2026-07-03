@@ -2,7 +2,8 @@
 	"scripts": {
 		"dev": "node server/server.js",
 		"start": "node server/server.js",
-		"db:init": "node server/init-db.js"
+		"db:init": "node server/init-db.js",
+		"admin:create": "node server/create-admin.js"
 	},
 	"engines": {
 		"node": ">=20"

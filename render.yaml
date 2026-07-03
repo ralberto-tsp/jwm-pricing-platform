@@ -20,3 +20,5 @@ services:
         value: "true"
       - key: DB_SSL_REJECT_UNAUTHORIZED
         value: "true"
+      - key: COOKIE_SECURE
+        value: "true"

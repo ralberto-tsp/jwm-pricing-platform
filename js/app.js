@@ -25,12 +25,18 @@ function iniciarAplicacion(){
         inicializarResumen();
     }
 
-    cargarHistorial();
-    mostrarPantalla("cotizacion");
+    if(typeof cargarHistorial === "function"){
+        cargarHistorial();
+    }
+    mostrarPantalla(primeraPantallaPermitida());
 }
 
 function mostrarPantalla(nombre){
-    const pantallas = ["cotizacion", "resultado", "historial", "drivers", "resumen"];
+    if(typeof puedeVerPantalla === "function" && !puedeVerPantalla(nombre)){
+        nombre = primeraPantallaPermitida();
+    }
+
+    const pantallas = ["cotizacion", "resultado", "historial", "drivers", "resumen", "usuarios"];
 
     pantallas.forEach(function(pantalla){
         const elemento = document.getElementById("pantalla-" + pantalla);
@@ -62,12 +68,19 @@ function mostrarPantalla(nombre){
     if(nombre === "resumen" && typeof actualizarResumenEjecutivo === "function"){
         actualizarResumenEjecutivo();
     }
+
+    if(nombre === "usuarios" && typeof cargarUsuarios === "function"){
+        cargarUsuarios();
+    }
 }
 
 window.onload = async function(){
     try{
         await cargarVistas();
-        iniciarAplicacion();
+        const autenticado = typeof inicializarSeguridad === "function" ? await inicializarSeguridad() : true;
+        if(autenticado){
+            iniciarAplicacion();
+        }
     }catch(error){
         console.error(error);
         alert("No se pudieron cargar las vistas del sistema.");
