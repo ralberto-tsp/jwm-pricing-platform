@@ -1,4 +1,4 @@
-const JWM_API_BASE = localStorage.getItem("jwm_api_base") || obtenerApiBase();
+const JWM_API_BASE = obtenerApiBase();
 
 function obtenerApiBase(){
     const hostLocal = ["localhost", "127.0.0.1"].includes(window.location.hostname);
@@ -80,3 +80,4 @@ async function apiGuardarCotizacion(cotizacion){
         body: JSON.stringify(cotizacion)
     });
 }
+
