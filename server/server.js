@@ -331,6 +331,9 @@ function isAllowedOrigin(origin){
         if(["localhost", "127.0.0.1"].includes(url.hostname)){
             return true;
         }
+        if(url.hostname === "jwm-pricing-platform.onrender.com" || url.hostname.endsWith(".onrender.com")){
+            return true;
+        }
         const extraOrigins = String(process.env.ALLOWED_ORIGINS || "")
             .split(",")
             .map(function(item){ return item.trim(); })
