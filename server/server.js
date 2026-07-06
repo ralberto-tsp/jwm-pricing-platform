@@ -42,9 +42,9 @@ const requireReadAccess = roleRequired(["admin", "comercial", "consulta"]);
 app.get("/api/health", async function(req, res){
     try{
         await pingDatabase();
-        res.json({ ok: true, database: "connected" });
+        res.json({ ok: true, database: "connected", dbHost: databaseHostInfo() });
     }catch(error){
-        res.status(503).json({ ok: false, database: "disconnected", message: error.message });
+        res.status(503).json({ ok: false, database: "disconnected", dbHost: databaseHostInfo(), message: error.message });
     }
 });
 
@@ -304,6 +304,14 @@ function normalizeMoney(value){
 function sendError(res, error){
     console.error(error);
     res.status(500).json({ message: error.message || "Error interno" });
+}
+
+function databaseHostInfo(){
+    return {
+        host: process.env.DB_HOST || "127.0.0.1",
+        port: process.env.DB_PORT || "3306",
+        ssl: String(process.env.DB_SSL || "").toLowerCase() === "true"
+    };
 }
 
 function isAllowedOrigin(origin){
