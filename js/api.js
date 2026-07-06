@@ -23,10 +23,27 @@ async function apiRequest(path, options = {}){
         if(respuesta.status === 401 && typeof manejarSesionExpirada === "function"){
             manejarSesionExpirada();
         }
-        throw new Error(texto || "No se pudo conectar con la API.");
+        throw new Error(normalizarErrorApi(texto, respuesta.status));
     }
 
     return respuesta.json();
+}
+
+function normalizarErrorApi(texto, status){
+    try{
+        const data = JSON.parse(texto || "{}");
+        if(data.message){
+            return data.message;
+        }
+    }catch(_error){
+        // Keep the fallback below.
+    }
+
+    if(String(texto || "").includes("<!DOCTYPE html>")){
+        return "Error interno del servidor. Reintenta en unos segundos.";
+    }
+
+    return texto || "No se pudo conectar con la API. Codigo " + status;
 }
 
 async function apiHealth(){

@@ -268,6 +268,11 @@ app.post("/api/cotizaciones", requireAuth, requireCommercial, async function(req
     }
 });
 
+app.use("/api", function(error, req, res, next){
+    console.error(error);
+    res.status(500).json({ message: error.message || "Error interno del servidor." });
+});
+
 app.use(function(req, res){
     res.sendFile(path.join(rootDir, "index.html"));
 });
