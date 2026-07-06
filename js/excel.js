@@ -70,7 +70,7 @@ function leerCsvDriver(archivo){
 
 function guardarFilasImportadas(filas){
     const columnas = estructuraDrivers[driverActual];
-    const registros = filas.map(function(fila){
+    let registros = filas.map(function(fila){
         const registro = {};
         columnas.forEach(function(columna){
             const clave = normalizarCampo(columna);
@@ -80,6 +80,10 @@ function guardarFilasImportadas(filas){
     }).filter(function(registro){
         return Object.values(registro).some(function(valor){ return String(valor).trim() !== ""; });
     });
+
+    if(typeof limpiarRegistrosDriver === "function"){
+        registros = limpiarRegistrosDriver(driverActual, registros);
+    }
 
     if(registros.length === 0){
         alert("El archivo no contiene registros para importar.");

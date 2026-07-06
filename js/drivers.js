@@ -85,6 +85,7 @@ function mostrarTablaDriver(){
     const columnas = estructuraDrivers[driverActual];
     cabecera.innerHTML = construirCabecera(columnas);
 
+    drivers[driverActual] = limpiarRegistrosDriver(driverActual, drivers[driverActual] || []);
     const registros = obtenerRegistrosFiltrados(drivers[driverActual]);
     if(registros.length === 0){
         tabla.innerHTML = construirFilaVacia(columnas);
@@ -234,6 +235,7 @@ async function guardarDriver(mostrarMensaje = true){
         return;
     }
 
+    drivers[driverActual] = limpiarRegistrosDriver(driverActual, drivers[driverActual] || []);
     localStorage.setItem("driver_" + driverActual, JSON.stringify(drivers[driverActual]));
     await sincronizarDriverHaciaApi(driverActual);
     if(mostrarMensaje){
@@ -270,6 +272,51 @@ async function sincronizarDriverHaciaApi(nombre){
     }catch(error){
         console.warn("No se pudo sincronizar driver con SQL:", error.message);
     }
+}
+
+function limpiarRegistrosDriver(nombre, registros){
+    const columnas = estructuraDrivers[nombre] || [];
+    return (registros || []).filter(function(registro){
+        if(!registro || typeof registro !== "object"){
+            return false;
+        }
+        if(esFilaCabeceraDriver(registro, columnas)){
+            return false;
+        }
+        return Object.values(registro).some(function(valor){
+            return String(valor || "").trim() !== "";
+        });
+    });
+}
+
+function esFilaCabeceraDriver(registro, columnas){
+    if(!columnas.length){
+        return false;
+    }
+
+    const columnasNormalizadas = columnas.map(normalizarTextoComparacion);
+    const valores = columnas.map(function(columna){
+        const clave = normalizarCampo(columna);
+        return normalizarTextoComparacion(registro[clave]);
+    }).filter(Boolean);
+
+    if(valores.length === 0){
+        return false;
+    }
+
+    const coincidencias = valores.filter(function(valor){
+        return columnasNormalizadas.includes(valor);
+    }).length;
+
+    return coincidencias >= Math.min(3, columnas.length);
+}
+
+function normalizarTextoComparacion(valor){
+    return String(valor || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-zA-Z0-9]/g, "")
+        .toLowerCase();
 }
 
 function normalizarCampo(texto){
