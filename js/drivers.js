@@ -105,10 +105,7 @@ function construirCabecera(columnas){
 }
 
 function construirFilaVacia(columnas){
-    const celdas = columnas.map(function(columna){
-        return '<td class="driver-empty-cell">' + escaparHTML(columna) + "</td>";
-    }).join("");
-    return "<tr>" + celdas + '<td class="col-acciones"></td></tr>';
+    return '<tr><td class="driver-empty-cell driver-empty-row" colspan="' + (columnas.length + 1) + '">Sin registros cargados.</td></tr>';
 }
 
 function construirFilaDriver(item, index, columnas){
