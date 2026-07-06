@@ -32,6 +32,12 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.json({ limit: "25mb" }));
+app.use(function(req, res, next){
+    if(req.path === "/" || req.path.endsWith(".html") || req.path.startsWith("/js/")){
+        res.setHeader("Cache-Control", "no-store");
+    }
+    next();
+});
 app.use(express.static(rootDir));
 
 const requireAuth = authRequired(pool);

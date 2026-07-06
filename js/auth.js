@@ -34,13 +34,22 @@ async function iniciarSesionDesdeFormulario(event){
         }
     }catch(error){
         if(mensaje){
-            mensaje.textContent = "No se pudo iniciar sesion. Revisa correo y contrasena.";
+            mensaje.textContent = obtenerMensajeLogin(error);
         }
     }finally{
         if(boton){
             boton.disabled = false;
             boton.textContent = "Ingresar";
         }
+    }
+}
+
+function obtenerMensajeLogin(error){
+    try{
+        const data = JSON.parse(error.message);
+        return data.message || "No se pudo iniciar sesion.";
+    }catch(_error){
+        return error.message || "No se pudo iniciar sesion. Revisa correo y contrasena.";
     }
 }
 
