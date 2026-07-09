@@ -157,6 +157,16 @@ function enlazarEventosCotizacion(){
             margen.dataset.manual = "1";
         });
     }
+
+    ["largoOperativo", "anchoOperativo", "altoOperativo"].forEach(function(id){
+        const campo = document.getElementById(id);
+        if(campo){
+            campo.addEventListener("input", function(){
+                campo.dataset.manual = campo.value === "" ? "0" : "1";
+                actualizarCotizacionAutomatica();
+            });
+        }
+    });
 }
 
 function actualizarCotizacionAutomatica(){
@@ -189,7 +199,7 @@ function actualizarPesoTotal(){
 function actualizarClasificacionesYRecursos(){
     const servicio = buscarReglaTipoServicio();
     const resumen = obtenerResumenCargasCotizacion();
-    const dimensiones = obtenerDimensionesOperativasCotizacion();
+    const dimensiones = obtenerDimensionesFinalesCotizacion();
     const peso = obtenerPesoBrutoFinalCotizacion() || resumen.peso;
     const largo = dimensiones.largoOperativo || resumen.largo;
     const ancho = dimensiones.anchoOperativo || resumen.ancho;
@@ -208,9 +218,9 @@ function actualizarClasificacionesYRecursos(){
 
 function actualizarDimensionesOperativas(){
     const dimensiones = obtenerDimensionesOperativasCotizacion();
-    asignarValor("largoOperativo", dimensiones.largoOperativo ? dimensiones.largoOperativo.toFixed(2) : "");
-    asignarValor("anchoOperativo", dimensiones.anchoOperativo ? dimensiones.anchoOperativo.toFixed(2) : "");
-    asignarValor("altoOperativo", dimensiones.altoOperativo ? dimensiones.altoOperativo.toFixed(2) : "");
+    sugerirDimensionOperativa("largoOperativo", dimensiones.largoOperativo);
+    sugerirDimensionOperativa("anchoOperativo", dimensiones.anchoOperativo);
+    sugerirDimensionOperativa("altoOperativo", dimensiones.altoOperativo);
     const pesoBrutoFinal = obtenerPesoBrutoFinalCotizacion();
     asignarValor("pesoBrutoFinal", pesoBrutoFinal ? pesoBrutoFinal.toFixed(2) : "");
 }
@@ -218,7 +228,7 @@ function actualizarDimensionesOperativas(){
 function buscarReglaTipoServicio(){
     const tipo = document.getElementById("tipoServicio")?.value;
     const resumen = obtenerResumenCargasCotizacion();
-    const dimensiones = obtenerDimensionesOperativasCotizacion();
+    const dimensiones = obtenerDimensionesFinalesCotizacion();
     const peso = obtenerPesoBrutoFinalCotizacion() || resumen.peso;
     const largo = dimensiones.largoOperativo || resumen.largo;
     const ancho = dimensiones.anchoOperativo || resumen.ancho;
@@ -241,6 +251,40 @@ function buscarReglaTipoServicio(){
             ancho >= anchoDesde && ancho <= anchoHasta &&
             alto >= altoDesde && alto <= altoHasta;
     });
+}
+
+function sugerirDimensionOperativa(id, valor){
+    const campo = document.getElementById(id);
+    if(!campo){
+        return;
+    }
+
+    if(campo.dataset.manual === "1"){
+        return;
+    }
+
+    campo.value = valor ? valor.toFixed(2) : "";
+}
+
+function obtenerDimensionesFinalesCotizacion(){
+    const sugeridas = obtenerDimensionesOperativasCotizacion();
+
+    return {
+        largoOperativo: obtenerDimensionManualOSugerida("largoOperativo", sugeridas.largoOperativo),
+        anchoOperativo: obtenerDimensionManualOSugerida("anchoOperativo", sugeridas.anchoOperativo),
+        altoOperativo: obtenerDimensionManualOSugerida("altoOperativo", sugeridas.altoOperativo),
+        altoBaseCarga: sugeridas.altoBaseCarga
+    };
+}
+
+function obtenerDimensionManualOSugerida(id, sugerida){
+    const campo = document.getElementById(id);
+    if(!campo || campo.dataset.manual !== "1"){
+        return sugerida;
+    }
+
+    const valor = parseFloat(String(campo.value).replace(",", "."));
+    return Number.isNaN(valor) ? sugerida : valor;
 }
 
 function obtenerDimensionesOperativasCotizacion(){
@@ -665,7 +709,7 @@ function obtenerDatosCotizacion(){
     const descripcionCargas = cargas.map(function(item){ return item.descripcion; }).filter(Boolean).join(" / ");
     const accesorios = obtenerAccesoriosCotizacion();
     const pesoAccesorios = obtenerPesoAccesoriosCotizacion();
-    const dimensionesOperativas = obtenerDimensionesOperativasCotizacion();
+    const dimensionesOperativas = obtenerDimensionesFinalesCotizacion();
     const pesoBrutoFinal = obtenerPesoBrutoFinalCotizacion();
 
     return {
@@ -816,6 +860,9 @@ function cargarCotizacionEnFormulario(index){
     asignarValor("tractoApoyo", c.tractoApoyo || "No");
     asignarValor("tipoAcople", c.tipoAcople);
     asignarValor("configuracionAcople", c.configuracionAcople);
+    restaurarDimensionOperativa("largoOperativo", c.largoOperativo);
+    restaurarDimensionOperativa("anchoOperativo", c.anchoOperativo);
+    restaurarDimensionOperativa("altoOperativo", c.altoOperativo);
     asignarValor("categoriaConductor", c.categoriaConductor);
     asignarValor("cantidadConductores", c.cantidadConductores || 1);
     asignarValor("cantidadEscoltas", c.cantidadEscoltas || 0);
@@ -838,6 +885,16 @@ function cargarCotizacionEnFormulario(index){
     renderizarAccesoriosCotizacion();
     renderizarPersonalOperativo();
     actualizarCotizacionAutomatica();
+}
+
+function restaurarDimensionOperativa(id, valor){
+    const campo = document.getElementById(id);
+    if(!campo){
+        return;
+    }
+
+    campo.value = valor || "";
+    campo.dataset.manual = valor ? "1" : "0";
 }
 
 function limpiarCotizacion(){
@@ -865,6 +922,12 @@ function limpiarCotizacion(){
         margenInput.dataset.manual = "0";
         margenInput.dataset.llaveMargen = "";
     }
+    ["largoOperativo", "anchoOperativo", "altoOperativo"].forEach(function(id){
+        const campo = document.getElementById(id);
+        if(campo){
+            campo.dataset.manual = "0";
+        }
+    });
     establecerFechaCotizacion();
     asignarValor("cantidadCarga", 1);
     asignarValor("cantidadConductores", 1);

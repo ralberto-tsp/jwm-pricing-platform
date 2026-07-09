@@ -156,15 +156,15 @@
             </div>
             <div>
                 <label>Largo Operativo (m)</label>
-                <input type="number" id="largoOperativo" readonly>
+                <input type="number" id="largoOperativo" min="0" step="0.01">
             </div>
             <div>
                 <label>Ancho Operativo (m)</label>
-                <input type="number" id="anchoOperativo" readonly>
+                <input type="number" id="anchoOperativo" min="0" step="0.01">
             </div>
             <div>
                 <label>Alto Operativo (m)</label>
-                <input type="number" id="altoOperativo" readonly>
+                <input type="number" id="altoOperativo" min="0" step="0.01">
             </div>
             <div>
                 <label>Clasificacion por Peso</label>
@@ -181,6 +181,7 @@
             <div class="grid-full">
                 <div class="criterios-medidas">
                     <strong>Criterios de calculo</strong>
+                    <p>Las medidas operativas se sugieren con la informacion de carga, tracto/camion y acople; pueden ajustarse manualmente cuando la condicion real del servicio sea distinta.</p>
                     <p>El peso bruto total considera la tara del conjunto vehicular, accesorios instalados y peso total de la carga.</p>
                     <p>El largo operativo se mide entre los puntos mas extremos del tracto/camion y del acople, considerando la proyeccion de la carga cuando corresponda.</p>
                     <p>El ancho operativo corresponde al mayor ancho del conjunto vehicular o de la carga transportada.</p>
