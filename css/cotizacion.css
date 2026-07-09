@@ -23,6 +23,29 @@
     border-radius: 8px;
 }
 
+.criterios-medidas{
+    display: grid;
+    gap: 6px;
+    padding: 14px 16px;
+    border: 1px solid rgba(0, 120, 160, 0.18);
+    border-left: 4px solid var(--naranja-jwm);
+    background: #f8fbfd;
+    border-radius: 8px;
+}
+
+.criterios-medidas strong{
+    color: #10233f;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.criterios-medidas p{
+    margin: 0;
+    color: #52627a;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
 .personal-chip,
 .carga-chip,
 .accesorio-chip{

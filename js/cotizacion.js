@@ -190,7 +190,7 @@ function actualizarClasificacionesYRecursos(){
     const servicio = buscarReglaTipoServicio();
     const resumen = obtenerResumenCargasCotizacion();
     const dimensiones = obtenerDimensionesOperativasCotizacion();
-    const peso = resumen.peso;
+    const peso = obtenerPesoBrutoFinalCotizacion() || resumen.peso;
     const largo = dimensiones.largoOperativo || resumen.largo;
     const ancho = dimensiones.anchoOperativo || resumen.ancho;
     const alto = dimensiones.altoOperativo || resumen.alto;
@@ -211,13 +211,15 @@ function actualizarDimensionesOperativas(){
     asignarValor("largoOperativo", dimensiones.largoOperativo ? dimensiones.largoOperativo.toFixed(2) : "");
     asignarValor("anchoOperativo", dimensiones.anchoOperativo ? dimensiones.anchoOperativo.toFixed(2) : "");
     asignarValor("altoOperativo", dimensiones.altoOperativo ? dimensiones.altoOperativo.toFixed(2) : "");
+    const pesoBrutoFinal = obtenerPesoBrutoFinalCotizacion();
+    asignarValor("pesoBrutoFinal", pesoBrutoFinal ? pesoBrutoFinal.toFixed(2) : "");
 }
 
 function buscarReglaTipoServicio(){
     const tipo = document.getElementById("tipoServicio")?.value;
     const resumen = obtenerResumenCargasCotizacion();
     const dimensiones = obtenerDimensionesOperativasCotizacion();
-    const peso = resumen.peso;
+    const peso = obtenerPesoBrutoFinalCotizacion() || resumen.peso;
     const largo = dimensiones.largoOperativo || resumen.largo;
     const ancho = dimensiones.anchoOperativo || resumen.ancho;
     const alto = dimensiones.altoOperativo || resumen.alto;
@@ -265,6 +267,17 @@ function obtenerDimensionesOperativasCotizacion(){
         anchoAcople: anchoAcople,
         altoUnidad: altoUnidad
     };
+}
+
+function obtenerPesoBrutoFinalCotizacion(){
+    const resumen = obtenerResumenCargasCotizacion();
+    const unidad = buscarUnidadPrincipalCotizacion();
+    const acople = buscarAcopleCotizacion();
+    const taraUnidad = numeroDriverCotizacion(unidad, "pesoneto");
+    const taraAcople = numeroDriverCotizacion(acople, "pesotara");
+    const pesoAccesorios = obtenerPesoAccesoriosCotizacion();
+
+    return resumen.peso + taraUnidad + taraAcople + pesoAccesorios;
 }
 
 function buscarUnidadPrincipalCotizacion(){
@@ -653,6 +666,7 @@ function obtenerDatosCotizacion(){
     const accesorios = obtenerAccesoriosCotizacion();
     const pesoAccesorios = obtenerPesoAccesoriosCotizacion();
     const dimensionesOperativas = obtenerDimensionesOperativasCotizacion();
+    const pesoBrutoFinal = obtenerPesoBrutoFinalCotizacion();
 
     return {
         numero: document.getElementById("numeroCotizacion")?.value || "",
@@ -671,6 +685,7 @@ function obtenerDatosCotizacion(){
         cantidadCarga: cargas.length > 0 ? cargas.reduce(function(total, item){ return total + (parseFloat(item.cantidad) || 0); }, 0) : document.getElementById("cantidadCarga")?.value || "",
         pesoUnitario: cargas.length === 1 ? cargas[0].pesoUnitario : "",
         peso: resumenCargas.peso > 0 ? resumenCargas.peso.toFixed(2) : document.getElementById("pesoTotal")?.value || "",
+        pesoBrutoFinal: pesoBrutoFinal ? pesoBrutoFinal.toFixed(2) : "",
         largoCarga: resumenCargas.largo > 0 ? resumenCargas.largo.toFixed(2) : document.getElementById("largoCarga")?.value || "",
         anchoCarga: resumenCargas.ancho > 0 ? resumenCargas.ancho.toFixed(2) : document.getElementById("anchoCarga")?.value || "",
         altoCarga: resumenCargas.alto > 0 ? resumenCargas.alto.toFixed(2) : document.getElementById("altoCarga")?.value || "",
