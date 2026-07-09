@@ -9,15 +9,15 @@ const drivers = {
 };
 
 const estructuraDrivers = {
-    flota: ["Tipo", "Configuracion", "Ejes", "Llantas Direccionales", "Llantas Traccion", "Peso Neto", "Peso Bruto", "PBV Legal", "Capacidad", "Precio", "% Depreciacion", "Vida Util", "Combustible"],
-    acoples: ["Tipo", "Tipo Acople", "Configuracion", "Ejes", "Llantas", "Capacidad", "Peso Tara", "PBV Legal", "Precio", "% Depreciacion", "Vida Util"],
+    flota: ["Tipo", "Configuracion", "Ejes", "Llantas Direccionales", "Llantas Traccion", "Largo", "Ancho", "Alto", "Alto Plataforma", "Peso Neto", "Peso Bruto", "PBV Legal", "Capacidad", "Precio", "% Depreciacion", "Vida Util", "Combustible"],
+    acoples: ["Tipo", "Tipo Acople", "Configuracion", "Ejes", "Llantas", "Largo", "Ancho", "Alto Plataforma", "Capacidad", "Peso Tara", "PBV Legal", "Precio", "% Depreciacion", "Vida Util"],
     accesorios: ["Tipo", "Peso", "Precio", "% Depreciacion", "Vida Util"],
     unidadesApoyo: ["Tipo Unidad", "Configuracion", "Ejes", "Llantas", "Capacidad", "Precio", "% Depreciacion", "Vida Util", "Combustible", "Aplica A"],
     flotaProrrateo: ["Tipo Unidad", "Cantidad", "Aplica Prorrateo"],
     ubigeos: ["Zona", "Departamento", "Provincia", "Distrito", "Km Ida", "Dias Ida"],
     combustible: ["Proveedor", "Tipo", "UM", "Precio Sin IGV"],
     rendimiento: ["Zona", "Configuracion", "Tipo Carga", "Vacio", "50% Peso", "100% Peso"],
-    tipoServicio: ["Tipo Servicio", "Peso Desde", "Peso Hasta", "Largo Hasta", "Ancho Hasta", "Alto Hasta", "Clasificacion Peso", "Clasificacion Medidas", "Escoltas", "Apoyo Policial", "Topografos", "Tipo Permiso"],
+    tipoServicio: ["Tipo Servicio", "Peso Desde", "Peso Hasta", "Largo Desde", "Largo Hasta", "Ancho Desde", "Ancho Hasta", "Alto Desde", "Alto Hasta", "Clasificacion Peso", "Clasificacion Medidas", "Escoltas", "Apoyo Policial", "Topografos", "Tipo Permiso", "Requiere Estudio Ruta", "Requiere Estudio Puentes", "Requiere Senalizacion", "Horario Restringido", "Observacion"],
     personal: ["Tipo Costo", "Area", "Cargo", "Cantidad", "Sueldo", "Costo Empresa", "Costo Diario", "Aplica Viatico", "Aplica Hospedaje", "Aplica Prorrateo"],
     conductores: ["Categoria", "Tipo Carga", "Habilitacion", "Costo Empresa", "Costo Diario"],
     peajes: ["Ruta", "Tramo", "Peaje", "Departamento", "Costo Eje", "Sentido", "Ejes Aplicables"],

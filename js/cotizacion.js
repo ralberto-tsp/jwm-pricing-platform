@@ -164,6 +164,7 @@ function actualizarCotizacionAutomatica(){
     actualizarUbicacion("destino", "provinciaDestino", "departamentoDestino");
     actualizarPesoTotal();
     actualizarClasificacionesYRecursos();
+    actualizarDimensionesOperativas();
     actualizarConfiguracion();
     actualizarRutaYTiempos();
     actualizarMargenObjetivo();
@@ -188,10 +189,11 @@ function actualizarPesoTotal(){
 function actualizarClasificacionesYRecursos(){
     const servicio = buscarReglaTipoServicio();
     const resumen = obtenerResumenCargasCotizacion();
+    const dimensiones = obtenerDimensionesOperativasCotizacion();
     const peso = resumen.peso;
-    const largo = resumen.largo;
-    const ancho = resumen.ancho;
-    const alto = resumen.alto;
+    const largo = dimensiones.largoOperativo || resumen.largo;
+    const ancho = dimensiones.anchoOperativo || resumen.ancho;
+    const alto = dimensiones.altoOperativo || resumen.alto;
 
     const clasificacionPeso = servicio?.clasificacionpeso || clasificarPesoBase(peso);
     const clasificacionMedidas = servicio?.clasificacionmedidas || clasificarMedidasBase(largo, ancho, alto);
@@ -204,24 +206,99 @@ function actualizarClasificacionesYRecursos(){
     asignarValor("tipoPermiso", servicio?.tipopermiso || permisoBase(peso, ancho, largo, alto));
 }
 
+function actualizarDimensionesOperativas(){
+    const dimensiones = obtenerDimensionesOperativasCotizacion();
+    asignarValor("largoOperativo", dimensiones.largoOperativo ? dimensiones.largoOperativo.toFixed(2) : "");
+    asignarValor("anchoOperativo", dimensiones.anchoOperativo ? dimensiones.anchoOperativo.toFixed(2) : "");
+    asignarValor("altoOperativo", dimensiones.altoOperativo ? dimensiones.altoOperativo.toFixed(2) : "");
+}
+
 function buscarReglaTipoServicio(){
     const tipo = document.getElementById("tipoServicio")?.value;
     const resumen = obtenerResumenCargasCotizacion();
+    const dimensiones = obtenerDimensionesOperativasCotizacion();
     const peso = resumen.peso;
-    const largo = resumen.largo;
-    const ancho = resumen.ancho;
-    const alto = resumen.alto;
+    const largo = dimensiones.largoOperativo || resumen.largo;
+    const ancho = dimensiones.anchoOperativo || resumen.ancho;
+    const alto = dimensiones.altoOperativo || resumen.alto;
 
     return obtenerDriver("tipoServicio").find(function(item){
         const coincideTipo = !item.tiposervicio || item.tiposervicio === tipo;
         const pesoDesde = parseFloat(item.pesodesde) || 0;
         const pesoHasta = parseFloat(item.pesohasta) || Infinity;
+        const largoDesde = parseFloat(item.largodesde) || 0;
         const largoHasta = parseFloat(item.largohasta) || Infinity;
+        const anchoDesde = parseFloat(item.anchodesde) || 0;
         const anchoHasta = parseFloat(item.anchohasta) || Infinity;
+        const altoDesde = parseFloat(item.altodesde) || 0;
         const altoHasta = parseFloat(item.altohasta) || Infinity;
 
-        return coincideTipo && peso >= pesoDesde && peso <= pesoHasta && largo <= largoHasta && ancho <= anchoHasta && alto <= altoHasta;
+        return coincideTipo &&
+            peso >= pesoDesde && peso <= pesoHasta &&
+            largo >= largoDesde && largo <= largoHasta &&
+            ancho >= anchoDesde && ancho <= anchoHasta &&
+            alto >= altoDesde && alto <= altoHasta;
     });
+}
+
+function obtenerDimensionesOperativasCotizacion(){
+    const resumen = obtenerResumenCargasCotizacion();
+    const unidad = buscarUnidadPrincipalCotizacion();
+    const acople = buscarAcopleCotizacion();
+    const largoUnidad = numeroDriverCotizacion(unidad, "largo");
+    const anchoUnidad = numeroDriverCotizacion(unidad, "ancho");
+    const altoUnidad = numeroDriverCotizacion(unidad, "alto");
+    const altoPlataformaUnidad = numeroDriverCotizacion(unidad, "altoplataforma");
+    const largoAcople = numeroDriverCotizacion(acople, "largo");
+    const anchoAcople = numeroDriverCotizacion(acople, "ancho");
+    const altoPlataformaAcople = numeroDriverCotizacion(acople, "altoplataforma");
+    const altoBaseCarga = altoPlataformaAcople || altoPlataformaUnidad || 0;
+
+    return {
+        largoOperativo: Math.max(resumen.largo, largoUnidad + largoAcople, largoAcople),
+        anchoOperativo: Math.max(resumen.ancho, anchoUnidad, anchoAcople),
+        altoOperativo: resumen.alto + altoBaseCarga,
+        altoBaseCarga: altoBaseCarga,
+        largoUnidad: largoUnidad,
+        largoAcople: largoAcople,
+        anchoUnidad: anchoUnidad,
+        anchoAcople: anchoAcople,
+        altoUnidad: altoUnidad
+    };
+}
+
+function buscarUnidadPrincipalCotizacion(){
+    const tipoVehiculo = document.getElementById("tipoVehiculo")?.value || "";
+    const configuracion = document.getElementById("configuracionPrincipal")?.value || "";
+
+    return obtenerDriver("flota").find(function(item){
+        return coincideFlexibleCotizacion(item.tipo, tipoVehiculo) &&
+            coincideFlexibleCotizacion(item.configuracion, configuracion);
+    }) || {};
+}
+
+function buscarAcopleCotizacion(){
+    const tipoAcople = document.getElementById("tipoAcople")?.value || "";
+    const configuracion = document.getElementById("configuracionAcople")?.value || "";
+
+    return obtenerDriver("acoples").find(function(item){
+        return coincideFlexibleCotizacion(item.tipoacople, tipoAcople) &&
+            coincideFlexibleCotizacion(item.configuracion, configuracion);
+    }) || {};
+}
+
+function coincideFlexibleCotizacion(valorDriver, valorFormulario){
+    if(!valorDriver || !valorFormulario){
+        return true;
+    }
+
+    return String(valorDriver).trim().toLowerCase() === String(valorFormulario).trim().toLowerCase();
+}
+
+function numeroDriverCotizacion(registro, campo){
+    const valor = registro && registro[campo] !== undefined ? registro[campo] : 0;
+    const numero = parseFloat(String(valor).replace(",", "."));
+    return Number.isNaN(numero) ? 0 : numero;
 }
 
 function clasificarPesoBase(peso){
@@ -575,6 +652,7 @@ function obtenerDatosCotizacion(){
     const descripcionCargas = cargas.map(function(item){ return item.descripcion; }).filter(Boolean).join(" / ");
     const accesorios = obtenerAccesoriosCotizacion();
     const pesoAccesorios = obtenerPesoAccesoriosCotizacion();
+    const dimensionesOperativas = obtenerDimensionesOperativasCotizacion();
 
     return {
         numero: document.getElementById("numeroCotizacion")?.value || "",
@@ -596,6 +674,10 @@ function obtenerDatosCotizacion(){
         largoCarga: resumenCargas.largo > 0 ? resumenCargas.largo.toFixed(2) : document.getElementById("largoCarga")?.value || "",
         anchoCarga: resumenCargas.ancho > 0 ? resumenCargas.ancho.toFixed(2) : document.getElementById("anchoCarga")?.value || "",
         altoCarga: resumenCargas.alto > 0 ? resumenCargas.alto.toFixed(2) : document.getElementById("altoCarga")?.value || "",
+        largoOperativo: dimensionesOperativas.largoOperativo ? dimensionesOperativas.largoOperativo.toFixed(2) : "",
+        anchoOperativo: dimensionesOperativas.anchoOperativo ? dimensionesOperativas.anchoOperativo.toFixed(2) : "",
+        altoOperativo: dimensionesOperativas.altoOperativo ? dimensionesOperativas.altoOperativo.toFixed(2) : "",
+        altoBaseCarga: dimensionesOperativas.altoBaseCarga ? dimensionesOperativas.altoBaseCarga.toFixed(2) : "",
         clasificacionPeso: document.getElementById("clasificacionPeso")?.value || "",
         clasificacionMedidas: document.getElementById("clasificacionMedidas")?.value || "",
         tipoServicio: document.getElementById("tipoServicio")?.value || "",

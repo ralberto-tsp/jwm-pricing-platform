@@ -132,6 +132,18 @@ function obtenerContextoResultado(){
         tipoacople: tipoAcople,
         configuracion: configuracionAcople
     }) || {};
+    const altoBaseCarga = numeroValorResultado(acople.altoplataforma || unidadPrincipal.altoplataforma);
+    const largoOperativo = Math.max(
+        resumenCargas.largo || numeroCampoResultado("largoCarga"),
+        numeroValorResultado(unidadPrincipal.largo) + numeroValorResultado(acople.largo),
+        numeroValorResultado(acople.largo)
+    );
+    const anchoOperativo = Math.max(
+        resumenCargas.ancho || numeroCampoResultado("anchoCarga"),
+        numeroValorResultado(unidadPrincipal.ancho),
+        numeroValorResultado(acople.ancho)
+    );
+    const altoOperativo = (resumenCargas.alto || numeroCampoResultado("altoCarga")) + altoBaseCarga;
     const accesorios = obtenerAccesoriosResultado();
     const pesoAccesorios = accesorios.reduce(function(total, item){
         return total + numeroValorResultado(item.peso);
@@ -166,6 +178,10 @@ function obtenerContextoResultado(){
         largo: resumenCargas.largo || numeroCampoResultado("largoCarga"),
         ancho: resumenCargas.ancho || numeroCampoResultado("anchoCarga"),
         alto: resumenCargas.alto || numeroCampoResultado("altoCarga"),
+        largoOperativo: largoOperativo,
+        anchoOperativo: anchoOperativo,
+        altoOperativo: altoOperativo,
+        altoBaseCarga: altoBaseCarga,
         formaPago: valorCampoResultado("formaPago"),
         diasPago: numeroCampoResultado("diasPago"),
         porcentajeFactoring: numeroCampoResultado("porcentajeFactoring"),
