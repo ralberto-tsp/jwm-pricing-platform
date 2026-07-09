@@ -13,7 +13,8 @@
 }
 
 .lista-personal-operativo,
-.lista-cargas-cotizacion{
+.lista-cargas-cotizacion,
+.lista-accesorios-cotizacion{
     display: grid;
     gap: 8px;
     padding: 12px;
@@ -23,7 +24,8 @@
 }
 
 .personal-chip,
-.carga-chip{
+.carga-chip,
+.accesorio-chip{
     display: grid;
     grid-template-columns: minmax(180px, 1fr) minmax(120px, auto) auto;
     align-items: center;
@@ -36,6 +38,7 @@
 
 .personal-chip small,
 .carga-chip small,
+.accesorio-chip small,
 .muted{
     color: #64748b;
     font-size: 12px;
@@ -43,6 +46,7 @@
 
 .personal-chip button,
 .carga-chip button,
+.accesorio-chip button,
 .historial-actions button{
     min-height: 32px;
     padding: 6px 10px;
@@ -51,7 +55,8 @@
 
 @media (max-width: 780px){
     .personal-chip,
-    .carga-chip{
+    .carga-chip,
+    .accesorio-chip{
         grid-template-columns: 1fr;
     }
 }

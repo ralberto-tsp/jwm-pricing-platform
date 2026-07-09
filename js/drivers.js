@@ -3,7 +3,7 @@ let filtroDriver = "";
 let indiceRegistroModal = null;
 
 const drivers = {
-    flota: [], acoples: [], unidadesApoyo: [], flotaProrrateo: [], ubigeos: [], combustible: [], rendimiento: [], tipoServicio: [], personal: [], conductores: [],
+    flota: [], acoples: [], accesorios: [], unidadesApoyo: [], flotaProrrateo: [], ubigeos: [], combustible: [], rendimiento: [], tipoServicio: [], personal: [], conductores: [],
     peajes: [], mantenimiento: [], neumaticos: [], seguros: [], operativos: [],
     viaje: [], administrativos: [], financieros: [], permisos: [], margenes: []
 };
@@ -11,6 +11,7 @@ const drivers = {
 const estructuraDrivers = {
     flota: ["Tipo", "Configuracion", "Ejes", "Llantas Direccionales", "Llantas Traccion", "Peso Neto", "Peso Bruto", "Capacidad", "Precio", "% Depreciacion", "Vida Util", "Combustible"],
     acoples: ["Tipo", "Tipo Acople", "Configuracion", "Ejes", "Llantas", "Capacidad", "Peso Tara", "Precio", "% Depreciacion", "Vida Util"],
+    accesorios: ["Tipo", "Peso", "Precio", "% Depreciacion", "Vida Util"],
     unidadesApoyo: ["Tipo Unidad", "Configuracion", "Ejes", "Llantas", "Capacidad", "Precio", "% Depreciacion", "Vida Util", "Combustible", "Aplica A"],
     flotaProrrateo: ["Tipo Unidad", "Cantidad", "Aplica Prorrateo"],
     ubigeos: ["Zona", "Departamento", "Provincia", "Distrito", "Km Ida", "Dias Ida"],
@@ -53,6 +54,7 @@ async function cargarDriver(nombre){
 function obtenerNombreDriver(nombre){
     const nombres = {
         flota: "Tractos y Camiones",
+        accesorios: "Accesorios",
         unidadesApoyo: "Camionetas y Apoyos",
         flotaProrrateo: "Flota Prorrateo",
         tipoServicio: "Tipo de Servicio",

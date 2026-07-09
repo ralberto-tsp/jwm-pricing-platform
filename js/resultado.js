@@ -132,6 +132,10 @@ function obtenerContextoResultado(){
         tipoacople: tipoAcople,
         configuracion: configuracionAcople
     }) || {};
+    const accesorios = obtenerAccesoriosResultado();
+    const pesoAccesorios = accesorios.reduce(function(total, item){
+        return total + numeroValorResultado(item.peso);
+    }, 0);
 
     return {
         origen: valorCampoResultado("origen"),
@@ -157,6 +161,8 @@ function obtenerContextoResultado(){
         diasTransito: numeroCampoResultado("diasTransito"),
         dias: numeroCampoResultado("diasTotales") || numeroCampoResultado("diasTransito"),
         peso: resumenCargas.peso || numeroCampoResultado("pesoTotal"),
+        pesoAccesorios: pesoAccesorios,
+        pesoOperativo: (resumenCargas.peso || numeroCampoResultado("pesoTotal")) + pesoAccesorios,
         largo: resumenCargas.largo || numeroCampoResultado("largoCarga"),
         ancho: resumenCargas.ancho || numeroCampoResultado("anchoCarga"),
         alto: resumenCargas.alto || numeroCampoResultado("altoCarga"),
@@ -164,8 +170,20 @@ function obtenerContextoResultado(){
         diasPago: numeroCampoResultado("diasPago"),
         porcentajeFactoring: numeroCampoResultado("porcentajeFactoring"),
         unidadPrincipal: unidadPrincipal,
-        acople: acople
+        acople: acople,
+        accesorios: accesorios
     };
+}
+
+function obtenerAccesoriosResultado(){
+    if(typeof obtenerAccesoriosCotizacion === "function"){
+        return obtenerAccesoriosCotizacion();
+    }
+    try{
+        return JSON.parse(localStorage.getItem("cotizacion_accesorios")) || [];
+    }catch(error){
+        return [];
+    }
 }
 
 function obtenerSubconceptosCombustible(){
@@ -378,6 +396,9 @@ function obtenerSubconceptosDepreciacion(){
     if(ctx.acople && Object.keys(ctx.acople).length > 0){
         activos.push({ id: "depreciacion-acople", nombre: "Acople - " + etiquetaRegistroResultado(ctx.acople, ["tipo", "tipoacople", "configuracion"], "Acople"), costo: calcularDepreciacionActivo(ctx.acople, ctx.dias) });
     }
+    ctx.accesorios.forEach(function(accesorio, index){
+        activos.push({ id: "depreciacion-accesorio-" + index, nombre: "Accesorio - " + etiquetaRegistroResultado(accesorio, ["tipo"], "Accesorio"), costo: calcularDepreciacionActivo(accesorio, ctx.dias) });
+    });
     return crearListaCostos(activos);
 }
 
@@ -477,7 +498,7 @@ function obtenerRendimiento(ctx, unidad){
         return coincideTextoFlexible(item.configuracion, unidad.configuracion || ctx.configuracionPrincipal);
     }) || {};
 
-    const capacidad = numeroValorResultado(unidad.capacidad);
+    const capacidad = Math.max(numeroValorResultado(unidad.capacidad) - (ctx.pesoAccesorios || 0), 0);
     const ocupacion = capacidad > 0 ? ctx.peso / capacidad : 1;
     const vacio = numeroValorResultado(registro.vacio);
     const medio = numeroValorResultado(registro["50porcentajepeso"] || registro["50peso"]);

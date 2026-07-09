@@ -12,6 +12,7 @@ function inicializarCotizacion(){
     cargarListasCotizacion();
     enlazarEventosCotizacion();
     renderizarCargasCotizacion();
+    renderizarAccesoriosCotizacion();
     renderizarPersonalOperativo();
     actualizarCotizacionAutomatica();
 }
@@ -48,6 +49,7 @@ function cargarListasCotizacion(){
     cargarSelectDesdeValores("configuracionPrincipal", obtenerValoresDriver("flota", "configuracion"));
     cargarSelectDesdeValores("tipoAcople", obtenerValoresDriver("acoples", "tipoacople"));
     cargarSelectDesdeValores("configuracionAcople", obtenerValoresDriver("acoples", "configuracion"));
+    cargarSelectDesdeValores("tipoAccesorio", obtenerValoresDriver("accesorios", "tipo"));
     cargarSelectDesdeValores("categoriaConductor", obtenerValoresDriver("conductores", "categoria"));
     cargarSelectDesdeValores("tipoPersonalOperativo", obtenerValoresDriver("personal", "cargo"));
 
@@ -80,6 +82,7 @@ function asegurarOpcionesBase(){
     asegurarSelect("configuracionPrincipal", ["T3S3", "T3S4", "T4S4", "T4S5"]);
     asegurarSelect("tipoAcople", ["Plataforma", "Cama Baja", "Modular"]);
     asegurarSelect("configuracionAcople", ["S2", "S3", "S4", "S5"]);
+    asegurarSelect("tipoAccesorio", ["Rampa", "Cuna", "Palote"]);
     asegurarSelect("categoriaConductor", ["A4"]);
     asegurarSelect("tipoPersonalOperativo", ["Operador", "Rigger", "Mecanico", "Coordinador"]);
 }
@@ -353,6 +356,18 @@ function guardarCargasCotizacion(lista){
     localStorage.setItem("cotizacion_cargas", JSON.stringify(lista));
 }
 
+function obtenerAccesoriosCotizacion(){
+    try{
+        return JSON.parse(localStorage.getItem("cotizacion_accesorios")) || [];
+    }catch(error){
+        return [];
+    }
+}
+
+function guardarAccesoriosCotizacion(lista){
+    localStorage.setItem("cotizacion_accesorios", JSON.stringify(lista));
+}
+
 function obtenerCargaFormulario(){
     const descripcion = document.getElementById("descripcionCarga")?.value || "";
     const cantidad = numero("cantidadCarga");
@@ -447,6 +462,64 @@ function renderizarCargasCotizacion(){
     }).join("");
 }
 
+function agregarAccesorioCotizacion(){
+    const tipo = document.getElementById("tipoAccesorio")?.value || "";
+    if(!tipo){
+        alert("Seleccione un accesorio.");
+        return;
+    }
+
+    const driverAccesorio = obtenerDriver("accesorios").find(function(item){
+        return String(item.tipo || "").trim().toLowerCase() === tipo.trim().toLowerCase();
+    }) || {};
+
+    const lista = obtenerAccesoriosCotizacion();
+    lista.push({
+        tipo: tipo,
+        peso: driverAccesorio.peso || "",
+        precio: driverAccesorio.precio || "",
+        porcentajedepreciacion: driverAccesorio.porcentajedepreciacion || "",
+        vidautil: driverAccesorio.vidautil || ""
+    });
+
+    guardarAccesoriosCotizacion(lista);
+    renderizarAccesoriosCotizacion();
+    actualizarCotizacionAutomatica();
+}
+
+function eliminarAccesorioCotizacion(index){
+    const lista = obtenerAccesoriosCotizacion();
+    lista.splice(index, 1);
+    guardarAccesoriosCotizacion(lista);
+    renderizarAccesoriosCotizacion();
+    actualizarCotizacionAutomatica();
+}
+
+function obtenerPesoAccesoriosCotizacion(){
+    return obtenerAccesoriosCotizacion().reduce(function(total, item){
+        return total + (parseFloat(item.peso) || 0);
+    }, 0);
+}
+
+function renderizarAccesoriosCotizacion(){
+    const contenedor = document.getElementById("listaAccesoriosCotizacion");
+    if(!contenedor){ return; }
+
+    const lista = obtenerAccesoriosCotizacion();
+    if(lista.length === 0){
+        contenedor.innerHTML = '<span class="muted">Sin accesorios agregados.</span>';
+        return;
+    }
+
+    contenedor.innerHTML = lista.map(function(item, index){
+        const peso = parseFloat(item.peso) || 0;
+        const precio = parseFloat(item.precio) || 0;
+        return '<div class="accesorio-chip"><span><strong>' + escaparCotizacion(item.tipo) + '</strong></span>' +
+            '<small>' + peso.toFixed(2) + ' TN / S/ ' + precio.toLocaleString("es-PE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</small>' +
+            '<button type="button" onclick="eliminarAccesorioCotizacion(' + index + ')">Quitar</button></div>';
+    }).join("");
+}
+
 function agregarPersonalOperativo(){
     const cargo = document.getElementById("tipoPersonalOperativo")?.value || "";
     const cantidad = numero("cantidadPersonalOperativo") || 1;
@@ -500,6 +573,8 @@ function obtenerDatosCotizacion(){
     const cargas = obtenerCargasParaCalculo();
     const resumenCargas = obtenerResumenCargasCotizacion();
     const descripcionCargas = cargas.map(function(item){ return item.descripcion; }).filter(Boolean).join(" / ");
+    const accesorios = obtenerAccesoriosCotizacion();
+    const pesoAccesorios = obtenerPesoAccesoriosCotizacion();
 
     return {
         numero: document.getElementById("numeroCotizacion")?.value || "",
@@ -530,6 +605,8 @@ function obtenerDatosCotizacion(){
         tipoAcople: document.getElementById("tipoAcople")?.value || "",
         configuracionAcople: document.getElementById("configuracionAcople")?.value || "",
         configuracion: document.getElementById("configuracionFinal")?.value || "",
+        accesorios: accesorios,
+        pesoAccesorios: pesoAccesorios.toFixed(2),
         categoriaConductor: document.getElementById("categoriaConductor")?.value || "",
         cantidadConductores: document.getElementById("cantidadConductores")?.value || "",
         personalOperativo: obtenerPersonalOperativoCotizacion(),
@@ -616,6 +693,7 @@ function cargarCotizacionEnFormulario(index){
 
     localStorage.setItem("cotizacionEditandoIndex", String(index));
     guardarPersonalOperativoCotizacion(c.personalOperativo || []);
+    guardarAccesoriosCotizacion(c.accesorios || []);
 
     asignarValor("numeroCotizacion", c.numero || "");
 
@@ -660,6 +738,7 @@ function cargarCotizacionEnFormulario(index){
     asignarValor("tarifaCliente", c.tarifa || "");
 
     renderizarCargasCotizacion();
+    renderizarAccesoriosCotizacion();
     renderizarPersonalOperativo();
     actualizarCotizacionAutomatica();
 }
@@ -682,6 +761,7 @@ function limpiarCotizacion(){
     localStorage.removeItem("cotizacionEditandoIndex");
     localStorage.removeItem("cotizacionEditandoNumero");
     guardarCargasCotizacion([]);
+    guardarAccesoriosCotizacion([]);
     guardarPersonalOperativoCotizacion([]);
     const margenInput = document.getElementById("margenObjetivo");
     if(margenInput){
@@ -695,6 +775,7 @@ function limpiarCotizacion(){
     asignarValor("cantidadTopografos", 0);
     asignarValor("diasAdicionales", 0);
     renderizarCargasCotizacion();
+    renderizarAccesoriosCotizacion();
     renderizarPersonalOperativo();
     actualizarCotizacionAutomatica();
 }
