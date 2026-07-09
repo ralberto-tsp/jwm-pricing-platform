@@ -9,8 +9,8 @@ const drivers = {
 };
 
 const estructuraDrivers = {
-    flota: ["Tipo", "Configuracion", "Ejes", "Llantas Direccionales", "Llantas Traccion", "Peso Neto", "Peso Bruto", "Capacidad", "Precio", "% Depreciacion", "Vida Util", "Combustible"],
-    acoples: ["Tipo", "Tipo Acople", "Configuracion", "Ejes", "Llantas", "Capacidad", "Peso Tara", "Precio", "% Depreciacion", "Vida Util"],
+    flota: ["Tipo", "Configuracion", "Ejes", "Llantas Direccionales", "Llantas Traccion", "Peso Neto", "Peso Bruto", "PBV Legal", "Capacidad", "Precio", "% Depreciacion", "Vida Util", "Combustible"],
+    acoples: ["Tipo", "Tipo Acople", "Configuracion", "Ejes", "Llantas", "Capacidad", "Peso Tara", "PBV Legal", "Precio", "% Depreciacion", "Vida Util"],
     accesorios: ["Tipo", "Peso", "Precio", "% Depreciacion", "Vida Util"],
     unidadesApoyo: ["Tipo Unidad", "Configuracion", "Ejes", "Llantas", "Capacidad", "Precio", "% Depreciacion", "Vida Util", "Combustible", "Aplica A"],
     flotaProrrateo: ["Tipo Unidad", "Cantidad", "Aplica Prorrateo"],
