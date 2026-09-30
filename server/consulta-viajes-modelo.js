@@ -30,6 +30,10 @@ function modalidad(value) {
     const v = clave(value);
     return v === 'JWM' ? 'Propio' : v === 'TERC' ? 'Tercero' : texto(value) || 'Sin dato';
 }
+function unidad(value) {
+    const v = clave(value);
+    return v === 'CBJA' || v === 'CBAJA' ? 'CBAJA' : texto(value);
+}
 function ratio(a, b) { return a == null || b == null || b === 0 ? null : a / b; }
 function sumaCompleta(items, campo) {
     if (!items.length || items.some(x => x[campo] == null)) return null;
@@ -44,8 +48,9 @@ function operacion(row, source, index) {
         id: texto(row.SERVICIO_ID) || source + '|' + index,
         fuente: source, ot: clave(row.OT_CLAVE || row.N_OT), fecha: fecha(row.FECHA_SERVICIO || row.F_PROGRA),
         fechaFin: fecha(row.F_FIN_SERVICIO2 || row.F_FIN), cliente: texto(row.CLIENTE),
-        origen: texto(row.LUGAR_DE_CARGA), destino: texto(row.LUGAR_DE_DESCARGA),
-        unidad: texto(row.TIPO_DE_UNIDAD), modalidad: modalidad(row.PROPIO_TERC || row.PROP_TERC),
+        origen: texto(row.LUGAR_DE_CARGA), destino: texto(row.DEPARTAMEN || row.DEPARTAMENTO) || texto(row.LUGAR_DE_DESCARGA),
+        departamento: texto(row.DEPARTAMEN || row.DEPARTAMENTO), lugarDescarga: texto(row.LUGAR_DE_DESCARGA),
+        unidad: unidad(row.TIPO_DE_UNIDAD), unidadOriginal: texto(row.TIPO_DE_UNIDAD), modalidad: modalidad(row.PROPIO_TERC || row.PROP_TERC),
         modalidadOriginal: texto(row.PROPIO_TERC || row.PROP_TERC), carga: texto(row.MATERIAL_TRANSPOR),
         placa: texto(row.PLACA_TRACTO), acople: texto(row.PLACA_ACOPLE), conductor: texto(row.CONDUCTOR_OPERADOR),
         peso: texto(row.PESO), estado: texto(row.ESTADO_CLAVE || row.ESTADO_DE_OPERACIONES || row.ESTADO),

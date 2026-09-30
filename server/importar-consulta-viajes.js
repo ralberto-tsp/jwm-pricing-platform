@@ -49,7 +49,7 @@ function preparar(staging) {
         const stat = fs.statSync(source.file);
         if (stat.size !== source.size || stat.mtimeMs !== source.mtimeMs) throw new Error('El lote ETL cambió durante preparación.');
     }
-    const id = hash(costs.hash + operations.hash + '|consulta-v1');
+    const id = hash(costs.hash + operations.hash + '|consulta-v2-departamento-unidad');
     const metadata = { version: 1, corteEtL: cutoffs.slice().sort().at(-1), zonaCorte: 'Hora local del ETL, sin zona en CSV',
         preparado: new Date().toISOString(), ot: items.length,
         componentes: items.reduce((n, i) => n + i.componentes.length, 0),
