@@ -24,7 +24,10 @@ function registrarConsultaViajes(app, pool, requireAuth, requireReadAccess) {
             if (value) { filters.push('LOCATE(?, e.' + col + ') > 0'); values.push(value); }
         }
         if (req.query.ot) { filters.push('LOCATE(?, e.ot) > 0'); values.push(String(req.query.ot).trim().slice(0, 120)); }
-        field('origen', 'origen'); field('destino', 'destino'); field('unidad', 'unidad');
+        field('origen', 'origen');
+        const destino = String(req.query.destino || '').trim();
+        if (destino) { if (destino.length > 500) { const e = new Error('Filtro demasiado largo.'); e.status = 400; throw e; } filters.push('(LOCATE(?, e.destino) > 0 OR LOCATE(?, e.departamento) > 0 OR LOCATE(?, e.lugar_descarga) > 0)'); values.push(destino, destino, destino); }
+        field('unidad', 'unidad');
         field('modalidad', 'modalidad'); field('carga', 'carga');
         for (const [name, op] of [['desde', '>='], ['hasta', '<=']]) {
             if (!req.query[name]) continue;

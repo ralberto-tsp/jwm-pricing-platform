@@ -49,7 +49,7 @@ function preparar(staging) {
         const stat = fs.statSync(source.file);
         if (stat.size !== source.size || stat.mtimeMs !== source.mtimeMs) throw new Error('El lote ETL cambió durante preparación.');
     }
-    const id = hash(costs.hash + operations.hash + '|consulta-v2-departamento-unidad');
+    const id = hash(costs.hash + operations.hash + '|consulta-v3-destino-departamento-unidad');
     const metadata = { version: 1, corteEtL: cutoffs.slice().sort().at(-1), zonaCorte: 'Hora local del ETL, sin zona en CSV',
         preparado: new Date().toISOString(), ot: items.length,
         componentes: items.reduce((n, i) => n + i.componentes.length, 0),
@@ -79,9 +79,9 @@ async function publicar(pool, batch) {
             await insertar('INSERT INTO consulta_viajes_ot (lote_id, ot, fecha, resumen, detalle) VALUES ',
                 batch.items.map(item => [batch.id, item.summary.ot, item.summary.fecha, JSON.stringify(item.summary),
                     JSON.stringify({ componentes: item.componentes, ejecuciones: item.ejecuciones })]), 5);
-            await insertar('INSERT INTO consulta_viajes_ejecuciones (lote_id, ot, ordinal, fecha, origen, destino, unidad, modalidad, carga) VALUES ',
+            await insertar('INSERT INTO consulta_viajes_ejecuciones (lote_id, ot, ordinal, fecha, origen, destino, unidad, modalidad, carga, departamento, lugar_descarga) VALUES ',
                 batch.items.flatMap(item => item.filtros.map((e, i) => [batch.id, item.summary.ot, i, e.fecha,
-                    e.origen, e.destino, e.unidad, e.modalidad, e.carga])), 9);
+                    e.origen, e.destino, e.unidad, e.modalidad, e.carga, e.departamento, e.lugarDescarga])), 11);
         }
         await connection.execute('INSERT INTO consulta_viajes_activo (id, lote_id) VALUES (1, ?) ON DUPLICATE KEY UPDATE lote_id = VALUES(lote_id)', [batch.id]);
         await connection.commit();

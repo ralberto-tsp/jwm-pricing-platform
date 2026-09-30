@@ -7,6 +7,10 @@ async function main() {
     try {
         const sql = fs.readFileSync(path.join(__dirname, '..', 'sql', 'consulta-viajes.sql'), 'utf8');
         for (const statement of sql.split(';').map(s => s.trim()).filter(Boolean)) await pool.query(statement);
+        const [columns] = await pool.query("SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'consulta_viajes_ejecuciones'");
+        const names = new Set(columns.map(row => row.COLUMN_NAME));
+        if (!names.has('departamento')) await pool.query("ALTER TABLE consulta_viajes_ejecuciones ADD COLUMN departamento VARCHAR(200) NOT NULL DEFAULT ''");
+        if (!names.has('lugar_descarga')) await pool.query("ALTER TABLE consulta_viajes_ejecuciones ADD COLUMN lugar_descarga VARCHAR(500) NOT NULL DEFAULT ''");
         console.log('Esquema Consulta de viajes preparado.');
     } finally { await pool.end(); }
 }

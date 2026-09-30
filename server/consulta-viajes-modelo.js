@@ -48,7 +48,7 @@ function operacion(row, source, index) {
         id: texto(row.SERVICIO_ID) || source + '|' + index,
         fuente: source, ot: clave(row.OT_CLAVE || row.N_OT), fecha: fecha(row.FECHA_SERVICIO || row.F_PROGRA),
         fechaFin: fecha(row.F_FIN_SERVICIO2 || row.F_FIN), cliente: texto(row.CLIENTE),
-        origen: texto(row.LUGAR_DE_CARGA), destino: texto(row.DEPARTAMEN || row.DEPARTAMENTO) || texto(row.LUGAR_DE_DESCARGA),
+        origen: texto(row.LUGAR_DE_CARGA), destino: texto(row.LUGAR_DE_DESCARGA),
         departamento: texto(row.DEPARTAMEN || row.DEPARTAMENTO), lugarDescarga: texto(row.LUGAR_DE_DESCARGA),
         unidad: unidad(row.TIPO_DE_UNIDAD), unidadOriginal: texto(row.TIPO_DE_UNIDAD), modalidad: modalidad(row.PROPIO_TERC || row.PROP_TERC),
         modalidadOriginal: texto(row.PROPIO_TERC || row.PROP_TERC), carga: texto(row.MATERIAL_TRANSPOR),
@@ -99,7 +99,7 @@ function construirConsulta(costos, programacion) {
         const c = item.componentes, operations = item.ejecuciones.length ? item.ejecuciones : c;
         if (!operations.length) continue;
         const summary = { ot: item.ot, fecha: operations.map(x => x.fecha).filter(Boolean).sort()[0] || null,
-            cliente: unica(operations, 'cliente'), origen: unica(operations, 'origen'), destino: unica(operations, 'destino'),
+            cliente: unica(operations, 'cliente'), origen: unica(operations, 'origen'), destino: unica(operations, 'destino'), departamento: unica(operations, 'departamento'),
             unidad: unica(operations, 'unidad'), modalidad: unica(operations, 'modalidad'), carga: unica(operations, 'carga'),
             cantidadEjecuciones: item.ejecuciones.length, cantidadComponentes: c.length,
             soloCostos: !item.ejecuciones.length,
