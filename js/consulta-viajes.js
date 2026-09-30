@@ -45,10 +45,10 @@ async function cargarConsultaViajes(pagina=1, conservarFiltros=false){
         document.getElementById('consultaViajesConteo').textContent=response.total+' OT encontradas';
         const cell=(v,numeric=false)=>'<td class="'+(numeric?'consulta-numero':'consulta-texto')+'">'+consultaEscapar(v ?? 'Sin dato')+'</td>';
         document.getElementById('tablaConsultaViajes').innerHTML=response.items.length?response.items.map(r=>'<tr>'+[
-            cell(r.ot),cell(r.fecha),cell(r.cliente),cell(r.origen),cell(r.destino),cell(r.departamento),
-            cell(consultaDinero(r.flete),true),cell(consultaDinero(r.utilidad),true),cell(consultaPorcentaje(r.margen),true),cell(consultaDinero(r.utilidadOperativa),true),cell(consultaPorcentaje(r.margenOperativo),true),
+            cell(r.ot),cell(r.fecha),cell(r.cliente),cell(r.origen),cell(r.destino),cell(r.departamento),cell(r.unidad),
+            cell(consultaDinero(r.flete),true),cell(consultaPorcentaje(r.margen),true),cell(consultaPorcentaje(r.margenOperativo),true),
             '<td><button type="button" data-consulta-ot="'+consultaEscapar(r.ot)+'">Ver</button></td>'
-        ].join('')+'</tr>').join(''):'<tr><td colspan="12">'+(response.lote?'Sin antecedentes para estos filtros.':'Todavía no se ha importado un lote de viajes.')+'</td></tr>';
+        ].join('')+'</tr>').join(''):'<tr><td colspan="11">'+(response.lote?'Sin antecedentes para estos filtros.':'Todavía no se ha importado un lote de viajes.')+'</td></tr>';
         document.getElementById('tablaConsultaViajes').onclick=e=>{const b=e.target.closest('[data-consulta-ot]');if(b)verDetalleViaje(b.dataset.consultaOt);};
         document.getElementById('consultaPagina').textContent=response.paginas?'Página '+response.pagina+' de '+response.paginas:'';
         document.getElementById('consultaAnterior').disabled=pagina<=1;
