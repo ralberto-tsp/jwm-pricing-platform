@@ -57,7 +57,14 @@
 #pantalla-consulta-viajes .consulta-tabla th:nth-child(6),#pantalla-consulta-viajes .consulta-tabla td:nth-child(6){width:13%}
 #pantalla-consulta-viajes .consulta-tabla th:nth-child(7),#pantalla-consulta-viajes .consulta-tabla td:nth-child(7){width:7%}
 #pantalla-consulta-viajes .consulta-tabla th:nth-child(8),#pantalla-consulta-viajes .consulta-tabla td:nth-child(8){width:10%}
-#pantalla-consulta-viajes .consulta-tabla th:nth-child(9),#pantalla-consulta-viajes .consulta-tabla td:nth-child(9){width:7%;white-space:nowrap}
+#pantalla-consulta-viajes table:has(#tablaConsultaViajes){min-width:1180px;font-size:12px}
+#pantalla-consulta-viajes table:has(#tablaConsultaViajes) th,#pantalla-consulta-viajes table:has(#tablaConsultaViajes) td{padding:8px 8px;line-height:1.2}
+#pantalla-consulta-viajes table:has(#tablaConsultaViajes) th:nth-child(7),#pantalla-consulta-viajes table:has(#tablaConsultaViajes) td:nth-child(7){width:9%}
+#pantalla-consulta-viajes table:has(#tablaConsultaViajes) th:nth-child(8),#pantalla-consulta-viajes table:has(#tablaConsultaViajes) td:nth-child(8){width:9%}
+#pantalla-consulta-viajes table:has(#tablaConsultaViajes) th:nth-child(9),#pantalla-consulta-viajes table:has(#tablaConsultaViajes) td:nth-child(9){width:8%}
+#pantalla-consulta-viajes table:has(#tablaConsultaViajes) th:nth-child(10),#pantalla-consulta-viajes table:has(#tablaConsultaViajes) td:nth-child(10){width:10%}
+#pantalla-consulta-viajes table:has(#tablaConsultaViajes) th:nth-child(11),#pantalla-consulta-viajes table:has(#tablaConsultaViajes) td:nth-child(11){width:9%}
+#pantalla-consulta-viajes table:has(#tablaConsultaViajes) th:nth-child(12),#pantalla-consulta-viajes table:has(#tablaConsultaViajes) td:nth-child(12){width:6%;white-space:nowrap}
 #pantalla-consulta-viajes .consulta-tabla td.consulta-texto{min-width:0;max-width:none;overflow-wrap:anywhere}
 #pantalla-consulta-viajes .consulta-tabla-wrap{margin-bottom:12px}
 @media(max-width:800px){#pantalla-consulta-viajes #consultaDetalleIndicadores{grid-template-columns:repeat(2,minmax(0,1fr))}#pantalla-consulta-viajes #consultaViajesDetalle{width:94vw;max-width:94vw}}
