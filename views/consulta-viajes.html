@@ -1,0 +1,45 @@
+<div id="pantalla-consulta-viajes" style="display:none;">
+    <section class="card">
+        <div class="section-heading-row"><h2>Consulta de viajes y rentabilidad</h2><span class="section-label" id="consultaViajesCorte">Sin lote consultado</span></div>
+        <form id="consultaViajesForm" onsubmit="event.preventDefault(); cargarConsultaViajes(1)">
+            <div class="grid">
+                <div><label for="consultaOrigen">Origen</label><input id="consultaOrigen" placeholder="Buscar lugar de carga"></div>
+                <div><label for="consultaDestino">Destino</label><input id="consultaDestino" placeholder="Buscar lugar de descarga"></div>
+                <div><label for="consultaOT">Nro. OT</label><input id="consultaOT" placeholder="Todas las OT"></div>
+                <div><label for="consultaDesde">Desde</label><input id="consultaDesde" type="date"></div>
+                <div><label for="consultaHasta">Hasta</label><input id="consultaHasta" type="date"></div>
+                <div><label for="consultaUnidad">Tipo de unidad</label><input id="consultaUnidad" placeholder="Tipo de unidad registrado"></div>
+                <div><label for="consultaModalidad">Modalidad</label><select id="consultaModalidad"><option value="">Todas</option><option>Propio</option><option>Tercero</option><option>OTROS</option><option>VENTA</option></select></div>
+                <div><label for="consultaCarga">Tipo de carga</label><input id="consultaCarga" placeholder="Descripción original del material"></div>
+            </div>
+            <div class="actions"><button type="submit" id="consultaBuscar">Buscar</button><button type="button" class="consulta-secundario" onclick="limpiarConsultaViajes()">Limpiar</button><button type="button" class="consulta-secundario" onclick="mostrarPantalla('cotizacion')" id="consultaVolverCotizacion">Volver a cotización</button></div>
+        </form>
+        <p id="consultaViajesMensaje" role="status" aria-live="polite"></p>
+    </section>
+    <section class="card">
+        <div class="section-heading-row"><h2>Resultados</h2><span id="consultaViajesConteo"></span></div>
+        <div class="consulta-tabla-wrap"><table class="tabla-drivers consulta-tabla">
+            <thead><tr><th>OT</th><th>Fecha</th><th>Cliente</th><th>Origen</th><th>Destino</th><th>Flete referencial</th><th>Utilidad bruta referencial</th><th>Utilidad operativa referencial</th><th>Ver</th></tr></thead>
+            <tbody id="tablaConsultaViajes"><tr><td colspan="9">Selecciona filtros y pulsa Buscar.</td></tr></tbody>
+        </table></div>
+        <div class="consulta-paginacion"><button type="button" id="consultaAnterior" class="consulta-secundario" onclick="paginarConsultaViajes(-1)" disabled>Anterior</button><span id="consultaPagina"></span><button type="button" id="consultaSiguiente" class="consulta-secundario" onclick="paginarConsultaViajes(1)" disabled>Siguiente</button></div>
+    </section>
+    <dialog id="consultaViajesDetalle" aria-labelledby="consultaDetalleTitulo" oncancel="event.preventDefault();cerrarDetalleViaje()">
+        <div class="consulta-dialogo-cabecera"><h2 id="consultaDetalleTitulo">Detalle de OT</h2><button type="button" class="consulta-secundario" onclick="cerrarDetalleViaje()">Cerrar</button></div>
+        <div class="consulta-tabs" role="tablist" aria-label="Detalle de OT">
+            <button id="consultaTabViaje" role="tab" aria-selected="true" aria-controls="consultaPanelViaje" onclick="consultaCambiarTab('Viaje')">Viaje</button>
+            <button id="consultaTabCostos" role="tab" aria-selected="false" aria-controls="consultaPanelCostos" onclick="consultaCambiarTab('Costos')">Costos y rentabilidad</button>
+            <button id="consultaTabEconomico" role="tab" aria-selected="false" aria-controls="consultaPanelEconomico" onclick="consultaCambiarTab('Economico')">Detalle económico</button>
+        </div>
+        <div class="consulta-dialogo-cuerpo">
+            <p id="consultaDetalleAvisos" class="consulta-nota"></p>
+            <section id="consultaPanelViaje" role="tabpanel" aria-labelledby="consultaTabViaje"><div id="consultaEjecuciones"></div></section>
+            <section id="consultaPanelCostos" role="tabpanel" aria-labelledby="consultaTabCostos" hidden>
+                <div class="dashboard" id="consultaDetalleIndicadores"></div>
+                <div class="consulta-costos"><section><h3>Costos registrados y flete por OT</h3><table class="tabla-drivers consulta-conceptos"><thead><tr><th>Concepto</th><th>Importe</th></tr></thead><tbody id="consultaCostos"></tbody></table></section>
+                <section><h3>Estándar y resultado operativo por OT</h3><table class="tabla-drivers consulta-conceptos"><thead><tr><th>Concepto</th><th>Importe</th></tr></thead><tbody id="consultaEstandar"></tbody></table></section></div>
+            </section>
+            <section id="consultaPanelEconomico" role="tabpanel" aria-labelledby="consultaTabEconomico" hidden><div id="consultaComponentes"></div></section>
+        </div>
+    </dialog>
+</div>

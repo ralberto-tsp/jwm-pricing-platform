@@ -1,0 +1,70 @@
+#pantalla-consulta-viajes [hidden]{display:none!important}
+#pantalla-consulta-viajes .consulta-tabla-wrap{overflow-x:auto;width:100%;border:1px solid var(--linea);border-radius:8px;margin-bottom:18px}
+#pantalla-consulta-viajes .consulta-tabla{min-width:1500px;width:100%}
+#pantalla-consulta-viajes .consulta-tabla td,#pantalla-consulta-viajes .consulta-tabla th{vertical-align:top;white-space:nowrap}
+#pantalla-consulta-viajes .consulta-tabla td.consulta-texto{white-space:normal;min-width:130px;max-width:240px;overflow-wrap:anywhere}
+#pantalla-consulta-viajes .consulta-numero{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+#pantalla-consulta-viajes .consulta-nota{color:var(--texto-suave);font-size:13px;line-height:1.6;margin:14px 0}
+#pantalla-consulta-viajes .consulta-secundario{background:var(--panel);color:var(--azul-profundo);border:1px solid var(--linea)}
+#pantalla-consulta-viajes .consulta-paginacion{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap;margin-top:16px}
+#pantalla-consulta-viajes .consulta-costos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:24px 0}
+#pantalla-consulta-viajes .consulta-conceptos{width:100%;min-width:0}
+#pantalla-consulta-viajes .consulta-conceptos td{white-space:normal}
+#pantalla-consulta-viajes #consultaViajesMensaje[data-error="true"]{color:#a32929}
+#pantalla-consulta-viajes .consulta-fila-total{font-weight:600;background:var(--fondo)}
+@media(max-width:900px){#pantalla-consulta-viajes .consulta-costos{grid-template-columns:1fr}}
+#pantalla-consulta-viajes .consulta-tabla{min-width:1050px;font-size:13px}
+#pantalla-consulta-viajes .consulta-tabla td,#pantalla-consulta-viajes .consulta-tabla th{padding:10px 12px}
+#pantalla-consulta-viajes .consulta-tabla th{white-space:normal;position:sticky;top:0;z-index:1}
+#pantalla-consulta-viajes .consulta-tabla td.consulta-texto{min-width:95px;max-width:200px;overflow-wrap:normal;word-break:normal}
+#pantalla-consulta-viajes .consulta-tabla th:last-child,#pantalla-consulta-viajes .consulta-tabla td:last-child{position:sticky;right:0;background:var(--panel,#fff);box-shadow:-2px 0 5px #0001;z-index:2}
+#pantalla-consulta-viajes #consultaViajesDetalle{width:min(1180px,94vw);max-width:94vw;max-height:90vh;padding:0;border:1px solid var(--linea);border-radius:12px;color:var(--texto);background:var(--panel,#fff);box-shadow:0 16px 60px #0003}
+#consultaViajesDetalle::backdrop{background:#10283d88}
+#pantalla-consulta-viajes .consulta-dialogo-cabecera{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 24px;border-bottom:1px solid var(--linea)}
+#pantalla-consulta-viajes .consulta-dialogo-cabecera h2{margin:0;font-size:20px}
+#pantalla-consulta-viajes .consulta-tabs{display:flex;gap:8px;padding:12px 24px;border-bottom:1px solid var(--linea);flex-wrap:wrap}
+#pantalla-consulta-viajes .consulta-tabs button{font-size:14px;padding:10px 16px;background:var(--panel,#fff);border:1px solid var(--linea);color:var(--azul-profundo)}
+#pantalla-consulta-viajes .consulta-tabs button[aria-selected="true"]{background:var(--azul-profundo,#07516d);color:white}
+#pantalla-consulta-viajes .consulta-dialogo-cuerpo{padding:16px 24px;max-height:calc(90vh - 150px);overflow-y:auto;overscroll-behavior:contain}
+#pantalla-consulta-viajes .consulta-bloque{padding:16px;border:1px solid var(--linea);border-radius:8px;margin-bottom:16px}
+#pantalla-consulta-viajes .consulta-bloque h3,#pantalla-consulta-viajes .consulta-costos h3{font-size:16px;margin:0 0 14px;color:var(--azul-profundo)}
+#pantalla-consulta-viajes .consulta-viaje-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:0}
+#pantalla-consulta-viajes .consulta-viaje-grid dt{font-size:13px;color:var(--texto-suave);margin-bottom:5px}
+#pantalla-consulta-viajes .consulta-viaje-grid dd{font-size:14px;line-height:1.5;margin:0;overflow-wrap:break-word}
+#pantalla-consulta-viajes .consulta-conceptos{font-size:14px}
+#pantalla-consulta-viajes .consulta-conceptos th,#pantalla-consulta-viajes .consulta-conceptos td{padding:9px 12px}
+#pantalla-consulta-viajes .consulta-conceptos td.consulta-numero{white-space:nowrap}
+#pantalla-consulta-viajes .consulta-componente-meta{display:flex;flex-wrap:wrap;gap:20px;font-size:13px;color:var(--texto-suave)}
+@media(max-width:700px){#pantalla-consulta-viajes .consulta-viaje-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#pantalla-consulta-viajes .consulta-dialogo-cuerpo{padding:12px}#pantalla-consulta-viajes .consulta-tabs{padding:10px}#pantalla-consulta-viajes .consulta-tabs button{font-size:13px;padding:8px}#pantalla-consulta-viajes .consulta-dialogo-cabecera{padding:14px}}
+
+/* Ajuste compacto de consulta: más información visible y menos desplazamiento. */
+#pantalla-consulta-viajes #consultaDetalleIndicadores{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:10px 0 16px}
+#pantalla-consulta-viajes #consultaDetalleIndicadores .kpi-card{padding:14px 16px;min-height:0;border-top-width:3px}
+#pantalla-consulta-viajes #consultaDetalleIndicadores .kpi-card h3{font-size:12px;line-height:1.25;margin:0 0 8px}
+#pantalla-consulta-viajes #consultaDetalleIndicadores .kpi-card strong{font-size:22px;line-height:1.1}
+#pantalla-consulta-viajes #consultaViajesDetalle{width:min(1080px,88vw);max-width:1080px;max-height:84vh;margin:auto}
+#pantalla-consulta-viajes .consulta-dialogo-cuerpo{max-height:calc(84vh - 142px);padding:14px 20px}
+#pantalla-consulta-viajes .consulta-dialogo-cabecera{padding:14px 20px}
+#pantalla-consulta-viajes .consulta-dialogo-cabecera h2{font-size:18px}
+#pantalla-consulta-viajes .consulta-tabs{padding:9px 20px}
+#pantalla-consulta-viajes .consulta-tabs button{padding:8px 13px}
+#pantalla-consulta-viajes .consulta-tabla{min-width:0;table-layout:fixed}
+#pantalla-consulta-viajes .consulta-tabla th,#pantalla-consulta-viajes .consulta-tabla td{padding:8px 10px}
+#pantalla-consulta-viajes .consulta-tabla th:nth-child(1),#pantalla-consulta-viajes .consulta-tabla td:nth-child(1){width:10%}
+#pantalla-consulta-viajes .consulta-tabla th:nth-child(2),#pantalla-consulta-viajes .consulta-tabla td:nth-child(2){width:10%}
+#pantalla-consulta-viajes .consulta-tabla th:nth-child(3),#pantalla-consulta-viajes .consulta-tabla td:nth-child(3){width:18%}
+#pantalla-consulta-viajes .consulta-tabla th:nth-child(4),#pantalla-consulta-viajes .consulta-tabla td:nth-child(4),#pantalla-consulta-viajes .consulta-tabla th:nth-child(5),#pantalla-consulta-viajes .consulta-tabla td:nth-child(5){width:16%}
+#pantalla-consulta-viajes .consulta-tabla th:nth-child(6),#pantalla-consulta-viajes .consulta-tabla td:nth-child(6){width:13%}
+#pantalla-consulta-viajes .consulta-tabla th:nth-child(7),#pantalla-consulta-viajes .consulta-tabla td:nth-child(7){width:7%}
+#pantalla-consulta-viajes .consulta-tabla th:nth-child(8),#pantalla-consulta-viajes .consulta-tabla td:nth-child(8){width:10%}
+#pantalla-consulta-viajes .consulta-tabla th:nth-child(9),#pantalla-consulta-viajes .consulta-tabla td:nth-child(9){width:7%;white-space:nowrap}
+#pantalla-consulta-viajes .consulta-tabla td.consulta-texto{min-width:0;max-width:none;overflow-wrap:anywhere}
+#pantalla-consulta-viajes .consulta-tabla-wrap{margin-bottom:12px}
+@media(max-width:800px){#pantalla-consulta-viajes #consultaDetalleIndicadores{grid-template-columns:repeat(2,minmax(0,1fr))}#pantalla-consulta-viajes #consultaViajesDetalle{width:94vw;max-width:94vw}}
+
+/* Alineación de resultados: cada valor queda centrado dentro de su propia columna. */
+#pantalla-consulta-viajes table:has(#tablaConsultaViajes) th,
+#pantalla-consulta-viajes table:has(#tablaConsultaViajes) td{ text-align:center; vertical-align:middle; }
+#pantalla-consulta-viajes table:has(#tablaConsultaViajes) td.consulta-texto{ overflow-wrap:anywhere; word-break:normal; }
+#pantalla-consulta-viajes table:has(#tablaConsultaViajes) td.consulta-numero{ white-space:normal; }
+#pantalla-consulta-viajes table:has(#tablaConsultaViajes) td:last-child{ text-align:center; }

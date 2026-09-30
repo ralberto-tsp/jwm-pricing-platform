@@ -3,9 +3,9 @@ const crypto = require("crypto");
 const SESSION_COOKIE = "jwm_session";
 const SESSION_DAYS = 7;
 const ROLES = {
-    admin: ["cotizacion", "resultado", "resumen", "historial", "drivers", "usuarios"],
-    comercial: ["cotizacion", "resultado", "resumen", "historial"],
-    consulta: ["resumen", "historial"]
+    admin: ["cotizacion", "resultado", "resumen", "historial", "drivers", "usuarios", "consulta-viajes"],
+    comercial: ["cotizacion", "resultado", "resumen", "historial", "consulta-viajes"],
+    consulta: ["resumen", "historial", "consulta-viajes"]
 };
 
 function hashPassword(password, salt = crypto.randomBytes(16).toString("hex")){

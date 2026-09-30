@@ -36,7 +36,7 @@ function mostrarPantalla(nombre){
         nombre = primeraPantallaPermitida();
     }
 
-    const pantallas = ["cotizacion", "resultado", "historial", "drivers", "resumen", "usuarios"];
+    const pantallas = ["cotizacion", "resultado", "historial", "drivers", "resumen", "usuarios", "consulta-viajes"];
 
     pantallas.forEach(function(pantalla){
         const elemento = document.getElementById("pantalla-" + pantalla);
@@ -71,6 +71,9 @@ function mostrarPantalla(nombre){
 
     if(nombre === "usuarios" && typeof cargarUsuarios === "function"){
         cargarUsuarios();
+    }
+    if(nombre === "consulta-viajes" && typeof inicializarConsultaViajes === "function"){
+        inicializarConsultaViajes();
     }
 }
 

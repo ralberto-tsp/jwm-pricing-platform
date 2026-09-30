@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="css/drivers.css?v=20260709g">
 <link rel="stylesheet" href="css/resultado.css?v=20260709g">
 <link rel="stylesheet" href="css/historial.css?v=20260709g">
+<link rel="stylesheet" href="css/consulta-viajes.css?v=20260930">
 <link rel="stylesheet" href="css/resumen.css?v=20260709g">
 <link rel="stylesheet" href="css/usuarios.css?v=20260709g">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,6 +49,7 @@
                 <li class="menu-item" data-screen="resultado" data-roles="admin,comercial" onclick="mostrarPantalla('resultado')">Resultado</li>
                 <li class="menu-item" data-screen="resumen" data-roles="admin,comercial,consulta" onclick="mostrarPantalla('resumen')">Resumen Ejecutivo</li>
                 <li class="menu-item" data-screen="historial" data-roles="admin,comercial,consulta" onclick="mostrarPantalla('historial')">Historial</li>
+                <li class="menu-item" data-screen="consulta-viajes" data-roles="admin,comercial,consulta" onclick="mostrarPantalla('consulta-viajes')">Consulta de viajes</li>
                 <li class="menu-item" data-screen="drivers" data-roles="admin" onclick="mostrarPantalla('drivers')">Drivers</li>
                 <li class="menu-item" data-screen="usuarios" data-roles="admin" onclick="mostrarPantalla('usuarios')">Usuarios</li>
             </ul>
@@ -58,6 +60,7 @@
         <div id="pantalla-cotizacion" data-view="views/cotizacion.html"></div>
         <div id="pantalla-resultado" data-view="views/resultado.html" style="display:none;"></div>
         <div id="pantalla-historial" data-view="views/historial.html" style="display:none;"></div>
+        <div id="pantalla-consulta-viajes" data-view="views/consulta-viajes.html" style="display:none;"></div>
         <div id="pantalla-resumen" data-view="views/resumen.html" style="display:none;"></div>
         <div id="pantalla-drivers" data-view="views/drivers.html" style="display:none;"></div>
         <div id="pantalla-usuarios" data-view="views/usuarios.html" style="display:none;"></div>
@@ -71,6 +74,7 @@
 <script src="js/drivers.js?v=20260709g"></script>
 <script src="js/resultado.js?v=20260709g"></script>
 <script src="js/historial.js?v=20260709g"></script>
+<script src="js/consulta-viajes.js?v=20260930"></script>
 <script src="js/resumen.js?v=20260709g"></script>
 <script src="js/excel.js?v=20260709g"></script>
 <script src="js/pdf.js?v=20260709g"></script>

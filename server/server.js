@@ -38,12 +38,18 @@ app.use(function(req, res, next){
     }
     next();
 });
-app.use(express.static(rootDir));
+// Solo publicar recursos de la interfaz. Los staging, SQL y scripts son privados.
+for(const directory of ["assets", "css", "js", "views", "vendor"]){
+    app.use("/" + directory, express.static(path.join(rootDir, directory)));
+}
+app.get("/", function(req, res){ res.sendFile(path.join(rootDir, "index.html")); });
+app.get("/index.html", function(req, res){ res.sendFile(path.join(rootDir, "index.html")); });
 
 const requireAuth = authRequired(pool);
 const requireAdmin = roleRequired(["admin"]);
 const requireCommercial = roleRequired(["admin", "comercial"]);
 const requireReadAccess = roleRequired(["admin", "comercial", "consulta"]);
+require("./consulta-viajes").registrarConsultaViajes(app, pool, requireAuth, requireReadAccess);
 
 app.get("/api/health", async function(req, res){
     try{
